@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+  mysql:
+    image:  mysql:8.4
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_DATABASE: 'nest_bank_db'
+      MYSQL_USER: 'bank'
+      MYSQL_PASSWORD: 'bank123'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+      MYSQL_RANDOM_ROOT_PASSWORD: 'false'
+    ports:
+      - '4306:3306'
+    volumes:
+      - 'mysql_data:/var/lib/mysql'
+
+volumes:
+  mysql_data:
