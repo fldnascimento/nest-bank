@@ -10,7 +10,7 @@ import { BankAccountModel } from './bank-account.model';
 import {
   transactionsTypes,
   TransactionType,
-} from 'src/domain/bank-account/value-objects/transaction.value-object';
+} from 'src/domain/bank-account/entities/transaction.entity';
 
 @Table({ tableName: 'transactions', timestamps: false, underscored: true })
 export class TransactionModel extends Model {

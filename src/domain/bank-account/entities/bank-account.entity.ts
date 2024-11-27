@@ -1,10 +1,12 @@
 import { Entity } from 'src/domain/common/domain/entity';
+import { TransactionEntity } from './transaction.entity';
 
 export class BankAccountEntity extends Entity {
   private _accountNumber: string;
   private _balance: number;
   private _isActive: boolean;
   private _clientId: string;
+  private _transactions: TransactionEntity[] = [];
 
   constructor(
     id: string,
@@ -43,12 +45,14 @@ export class BankAccountEntity extends Entity {
   deposit(amount: number) {
     if (this._isActive) {
       this._balance += amount;
+      this.addTransaction(new TransactionEntity('CREDIT', amount));
     }
   }
 
   withdraw(amount: number) {
     if (this.isActive && this.balance >= amount) {
       this._balance -= amount;
+      this.addTransaction(new TransactionEntity('DEBIT', amount));
     }
   }
 
@@ -56,6 +60,13 @@ export class BankAccountEntity extends Entity {
     if (this.isActive && this.balance >= amount) {
       this._balance -= amount;
       destinationAccount.deposit(amount);
+      this.addTransaction(
+        new TransactionEntity('TRANSFER', amount, destinationAccount),
+      );
     }
+  }
+
+  private addTransaction(transaction: TransactionEntity) {
+    this._transactions.push(transaction);
   }
 }

@@ -1,9 +1,10 @@
-import { BankAccountEntity } from '../entities/bank-account.entity';
+import { Entity } from 'src/domain/common/domain/entity';
+import { BankAccountEntity } from './bank-account.entity';
 
 export const transactionsTypes = ['CREDIT', 'DEBIT', 'TRANSFER'] as const;
 export type TransactionType = (typeof transactionsTypes)[number];
 
-export class TransactionValueObject {
+export class TransactionEntity extends Entity {
   private _type: TransactionType;
   private _amount: number;
   private _timestamp: Date;
@@ -14,10 +15,15 @@ export class TransactionValueObject {
     amount: number,
     destinationAccount?: BankAccountEntity,
   ) {
+    super();
     this._type = type;
     this._amount = amount;
     this._timestamp = new Date();
     this._destinationAccount = destinationAccount;
+  }
+
+  get id(): string {
+    return this._id;
   }
 
   get type(): TransactionType {
