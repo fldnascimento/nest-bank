@@ -7,6 +7,7 @@ export class CreateClientDto {
   @ApiProperty({
     type: 'string',
     description: 'Nome completo',
+    example: 'Felipe Nascimento',
   })
   fullName: string;
 
@@ -15,6 +16,7 @@ export class CreateClientDto {
   @ApiProperty({
     type: 'string',
     description: 'CPF',
+    example: '000.000.000-00',
   })
   cpf: string;
 
@@ -23,6 +25,7 @@ export class CreateClientDto {
   @ApiProperty({
     type: 'string',
     description: 'Data de nascimento',
+    example: '1990-01-01',
   })
   birthDate: Date;
 }

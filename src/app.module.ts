@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { BankAccountModel } from './infrastructure/database/models/bank-account.model';
@@ -60,13 +58,7 @@ const models = [BankAccountModel, ClientModel, TransactionModel];
       models: models,
     }),
   ],
-  controllers: [AppController, BankAccountController, ClientController],
-  providers: [
-    ...domainServices,
-    ...repositories,
-    ...usecases,
-    ...mappers,
-    AppService,
-  ],
+  controllers: [BankAccountController, ClientController],
+  providers: [...domainServices, ...repositories, ...usecases, ...mappers],
 })
 export class AppModule {}

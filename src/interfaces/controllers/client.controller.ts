@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { ApiOperation } from '@nestjs/swagger';
 import { CreateClientDto } from 'src/application/client/dto/create-client.dto';
 import { CreateClientUseCase } from 'src/application/client/usecases/create-client.usecase';
 import { GetClientUseCase } from 'src/application/client/usecases/get-client.usecase';
@@ -11,11 +12,17 @@ export class ClientController {
   ) {}
 
   @Get(':id')
+  @ApiOperation({
+    summary: 'API para buscar cliente por ID',
+  })
   getHello(@Param('id') id: string) {
     return this.getClientUseCase.execute(id);
   }
 
   @Post()
+  @ApiOperation({
+    summary: 'API para cadastrar cliente',
+  })
   createClient(@Body() body: CreateClientDto) {
     return this.createClientUseCase.execute(body);
   }
