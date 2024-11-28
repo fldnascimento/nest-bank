@@ -21,7 +21,9 @@ export class ClientController {
 
   @Post()
   @ApiOperation({
-    summary: 'Cria cliente',
+    summary: 'Cria cliente ',
+    description:
+      'Para criar um novo cliente é necessário um CPF válido. </br> Use esse site para gerar um CPF: 👉🏽 <a href="https://www.4devs.com.br/gerador_de_cpf" target="_blank">Gerar CPF</a>',
   })
   createClient(@Body() body: CreateClientDto) {
     return this.createClientUseCase.execute(body);
