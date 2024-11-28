@@ -15,8 +15,8 @@ import { BankAccountImplRepository } from './infrastructure/repositories/bank-ac
 import { BankAccountService } from './domain/bank-account/services/bank-account.service';
 import { ClientService } from './domain/client/services/client.service';
 import { BankAccountApplicationService } from './application/bank-account/services/bank-account-application.service';
-import { ClientApplicationService } from './application/client/usecases/client-application.service';
 import { CreateClientUseCase } from './application/client/usecases/create-client.usecase';
+import { GetClientUseCase } from './application/client/usecases/get-client.usecase';
 
 const mappers = [BankAccountMapper, ClientMapper];
 const repositories = [
@@ -33,7 +33,7 @@ const repositories = [
 const domainServices = [BankAccountService, ClientService];
 const usecases = [
   BankAccountApplicationService,
-  ClientApplicationService,
+  GetClientUseCase,
   CreateClientUseCase,
 ];
 
