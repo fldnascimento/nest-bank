@@ -2,9 +2,12 @@ import { Inject, Injectable } from '@nestjs/common';
 import { BankAccountEntity } from 'src/domain/bank-account/entities/bank-account.entity';
 import { WithdrawDto } from '../dto/withdraw.dto';
 import { BankAccountService } from 'src/domain/bank-account/interfaces/services/bank-account.service';
+import { UseCase } from 'src/domain/common/application/usecase';
 
 @Injectable()
-export class WithdrawUseCase {
+export class WithdrawUseCase
+  implements UseCase<WithdrawDto, BankAccountEntity>
+{
   constructor(
     @Inject('BankAccountService')
     private readonly bankAccountService: BankAccountService,
