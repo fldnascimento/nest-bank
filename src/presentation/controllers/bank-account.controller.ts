@@ -1,38 +1,40 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { ApiOperation } from '@nestjs/swagger';
 import { CreateBankAccountDto } from '@application/bank-account/dto/create-bank-account.dto';
-import { DepositDto } from '@application/bank-account/dto/deposit.dto';
-import { WithdrawDto } from '@application/bank-account/dto/withdraw.dto';
 import { CreateBankAccountUseCase } from '@application/bank-account/usecases/create-bank-account.usecase';
-import { DepositUseCase } from '@application/bank-account/usecases/deposit.usecase';
 import { GetBankAccountUseCase } from '@application/bank-account/usecases/get-bank-account.usecase';
-import { WithdrawUseCase } from '@application/bank-account/usecases/withdraw.usecase';
+import { UpdateBankAccountDto } from '@application/bank-account/dto/update-bank-account.dto';
+import { UpdateBankAccountUseCase } from '@application/bank-account/usecases/update-bank-account.usecase';
 
 @Controller('bank-account')
 export class BankAccountController {
   constructor(
     private readonly createBankAccountUseCase: CreateBankAccountUseCase,
-    private readonly depositUseCase: DepositUseCase,
-    private readonly withdrawUseCase: WithdrawUseCase,
     private readonly getBankAccountUseCase: GetBankAccountUseCase,
+    private readonly updateBankAccountUseCase: UpdateBankAccountUseCase,
   ) {}
 
   @Get(':id')
+  @ApiOperation({
+    summary: 'Consulta conta bancária por ID',
+  })
   getHello(@Param('id') id: string) {
     return this.getBankAccountUseCase.execute(id);
   }
 
   @Post()
+  @ApiOperation({
+    summary: 'Cria conta bancária',
+  })
   createBankAccount(@Body() body: CreateBankAccountDto) {
     return this.createBankAccountUseCase.execute(body);
   }
 
-  @Post('deposit')
-  deposit(@Body() body: DepositDto) {
-    return this.depositUseCase.execute(body);
-  }
-
-  @Post('withdraw')
-  withdraw(@Body() body: WithdrawDto) {
-    return this.withdrawUseCase.execute(body);
+  @Put()
+  @ApiOperation({
+    summary: 'Atualiza o status da conta bancária',
+  })
+  updateBankAccount(@Body() body: UpdateBankAccountDto) {
+    return this.updateBankAccountUseCase.execute(body);
   }
 }

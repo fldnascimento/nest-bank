@@ -52,6 +52,10 @@ export class BankAccountEntity extends Entity<BankAccountProps> {
     return this._props.transactions;
   }
 
+  public setActive(isActive: boolean) {
+    this._props.isActive = isActive;
+  }
+
   public deposit(amount: number) {
     if (this._props.isActive) {
       this._props.balance += amount;

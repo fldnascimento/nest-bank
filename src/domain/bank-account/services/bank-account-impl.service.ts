@@ -68,4 +68,15 @@ export class BankAccountImplService implements BankAccountService {
 
     return account;
   }
+
+  async updateActive(
+    accountNumber: string,
+    status: boolean,
+  ): Promise<BankAccountEntity> {
+    const account = await this.getAccountByNumber(accountNumber);
+    account.setActive(status);
+    await this.accountRepository.update(account);
+
+    return account;
+  }
 }

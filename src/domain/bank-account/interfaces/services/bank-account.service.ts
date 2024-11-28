@@ -7,4 +7,8 @@ export interface BankAccountService extends Service {
   getAccountByNumber(id: string): Promise<BankAccountEntity | null>;
   deposit(accountNumber: string, amount: number): Promise<BankAccountEntity>;
   withdraw(accountNumber: string, amount: number): Promise<BankAccountEntity>;
+  updateActive(
+    accountNumber: string,
+    status: boolean,
+  ): Promise<BankAccountEntity>;
 }
