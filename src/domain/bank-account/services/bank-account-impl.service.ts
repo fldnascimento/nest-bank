@@ -19,7 +19,7 @@ export class BankAccountImplService implements BankAccountService {
   }
 
   async getAccountById(id: string): Promise<BankAccountEntity> {
-    const account = await this.accountRepository.findById(id);
+    const account = await this.accountRepository.findByIdWithTransactions(id);
     if (!account) {
       throw new BankAccountNotFoundException();
     }

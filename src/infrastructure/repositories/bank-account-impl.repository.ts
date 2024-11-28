@@ -89,4 +89,28 @@ export class BankAccountImplRepository implements BankAccountRepository {
     }
     return this.bankAccountMapper.toEntity(account);
   }
+
+  async findByIdWithTransactions(
+    id: string,
+  ): Promise<BankAccountEntity | null> {
+    const account = await BankAccountModel.findByPk(id, {
+      include: [
+        {
+          model: TransactionModel,
+          as: 'transactions',
+          include: [
+            {
+              model: BankAccountModel,
+              as: 'destinationAccount',
+            },
+          ],
+        },
+      ],
+    });
+
+    if (!account) {
+      return null;
+    }
+    return this.bankAccountMapper.toEntity(account);
+  }
 }

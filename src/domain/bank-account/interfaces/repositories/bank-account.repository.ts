@@ -7,4 +7,5 @@ export interface BankAccountRepository extends Repo<BankAccountEntity> {
   findByAccountNumberWithDestinactionAccount(
     accountNumber: string,
   ): Promise<BankAccountEntity | null>;
+  findByIdWithTransactions(id: string): Promise<BankAccountEntity | null>;
 }
