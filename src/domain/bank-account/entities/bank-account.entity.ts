@@ -21,8 +21,8 @@ export class BankAccountEntity extends Entity<BankAccountProps> {
         ...props,
         accountNumber: randomUUID().split('-')[0],
         transactions: [],
-        balance: props?.balance || 0,
-        isActive: props?.isActive || true,
+        balance: props?.balance ?? 0,
+        isActive: props?.isActive ?? true,
       },
       randomUUID(),
     );
