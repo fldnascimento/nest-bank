@@ -16,12 +16,17 @@ export class BankAccountEntity extends Entity<BankAccountProps> {
   }
 
   static new(props: Omit<BankAccountProps, 'transactions' | 'accountNumber'>) {
+    let balance = 0;
+    if (props?.balance && props.balance > 0) {
+      balance = props.balance;
+    }
+
     return new BankAccountEntity(
       {
         ...props,
         accountNumber: randomUUID().split('-')[0],
         transactions: [],
-        balance: props?.balance ?? 0,
+        balance: balance,
         isActive: props?.isActive ?? true,
       },
       randomUUID(),
