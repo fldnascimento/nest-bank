@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
-import { CreateClientDto } from 'src/application/client/dto/create-client.dto';
-import { CreateClientUseCase } from 'src/application/client/usecases/create-client.usecase';
-import { GetClientUseCase } from 'src/application/client/usecases/get-client.usecase';
+import { CreateClientDto } from '@application/client/dto/create-client.dto';
+import { CreateClientUseCase } from '@application/client/usecases/create-client.usecase';
+import { GetClientUseCase } from '@application/client/usecases/get-client.usecase';
 
 @Controller('client')
 export class ClientController {

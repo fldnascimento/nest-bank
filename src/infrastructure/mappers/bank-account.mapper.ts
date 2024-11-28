@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { BankAccountEntity } from 'src/domain/bank-account/entities/bank-account.entity';
-import { Mapper } from 'src/domain/common/infrastructure/mapper';
-import { BankAccountModel } from '../database/models/bank-account.model';
-import { TransactionEntity } from 'src/domain/bank-account/entities/transaction.entity';
+import { BankAccountEntity } from '@domain/bank-account/entities/bank-account.entity';
+import { Mapper } from '@domain/common/infrastructure/mapper';
+import { TransactionEntity } from '@domain/bank-account/entities/transaction.entity';
+import { BankAccountModel } from '@infrastructure/database/models/bank-account.model';
 
 @Injectable()
 export class BankAccountMapper

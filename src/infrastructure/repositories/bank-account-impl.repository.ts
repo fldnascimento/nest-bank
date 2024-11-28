@@ -1,10 +1,10 @@
-import { BankAccountMapper } from '../mappers/bank-account.mapper';
-import { BankAccountEntity } from 'src/domain/bank-account/entities/bank-account.entity';
-import { BankAccountModel } from '../database/models/bank-account.model';
-import { Injectable } from '@nestjs/common';
-import { TransactionModel } from '../database/models/transaction.model';
 import { randomUUID } from 'node:crypto';
-import { BankAccountRepository } from 'src/domain/bank-account/interfaces/repositories/bank-account.repository';
+import { Injectable } from '@nestjs/common';
+import { BankAccountEntity } from '@domain/bank-account/entities/bank-account.entity';
+import { BankAccountRepository } from '@domain/bank-account/interfaces/repositories/bank-account.repository';
+import { BankAccountMapper } from '@infrastructure/mappers/bank-account.mapper';
+import { BankAccountModel } from '@infrastructure/database/models/bank-account.model';
+import { TransactionModel } from '@infrastructure/database/models/transaction.model';
 
 @Injectable()
 export class BankAccountImplRepository implements BankAccountRepository {

@@ -1,4 +1,4 @@
-import { Entity } from '../domain/entity';
+import { Entity } from '@domain/common/domain/entity';
 
 export interface Mapper<T extends Entity<any>, M> {
   toEntity(model: M): T;

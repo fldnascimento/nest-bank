@@ -1,11 +1,11 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { CreateBankAccountDto } from 'src/application/bank-account/dto/create-bank-account.dto';
-import { DepositDto } from 'src/application/bank-account/dto/deposit.dto';
-import { WithdrawDto } from 'src/application/bank-account/dto/withdraw.dto';
-import { CreateBankAccountUseCase } from 'src/application/bank-account/usecases/create-bank-account.usecase';
-import { DepositUseCase } from 'src/application/bank-account/usecases/deposit.usecase';
-import { GetBankAccountUseCase } from 'src/application/bank-account/usecases/get-bank-account.usecase';
-import { WithdrawUseCase } from 'src/application/bank-account/usecases/withdraw.usecase';
+import { CreateBankAccountDto } from '@application/bank-account/dto/create-bank-account.dto';
+import { DepositDto } from '@application/bank-account/dto/deposit.dto';
+import { WithdrawDto } from '@application/bank-account/dto/withdraw.dto';
+import { CreateBankAccountUseCase } from '@application/bank-account/usecases/create-bank-account.usecase';
+import { DepositUseCase } from '@application/bank-account/usecases/deposit.usecase';
+import { GetBankAccountUseCase } from '@application/bank-account/usecases/get-bank-account.usecase';
+import { WithdrawUseCase } from '@application/bank-account/usecases/withdraw.usecase';
 
 @Controller('bank-account')
 export class BankAccountController {

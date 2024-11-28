@@ -1,5 +1,5 @@
-import { BankAccountEntity } from '../../entities/bank-account.entity';
-import { Service } from 'src/domain/common/domain/service';
+import { Service } from '@domain/common/domain/service';
+import { BankAccountEntity } from '@domain/bank-account/entities/bank-account.entity';
 
 export interface BankAccountService extends Service {
   createAccount(bankAccount: BankAccountEntity): Promise<BankAccountEntity>;

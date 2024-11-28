@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { BankAccountEntity } from 'src/domain/bank-account/entities/bank-account.entity';
+import { BankAccountEntity } from '@domain/bank-account/entities/bank-account.entity';
+import { BankAccountService } from '@domain/bank-account/interfaces/services/bank-account.service';
+import { UseCase } from '@domain/common/application/usecase';
 import { WithdrawDto } from '../dto/withdraw.dto';
-import { BankAccountService } from 'src/domain/bank-account/interfaces/services/bank-account.service';
-import { UseCase } from 'src/domain/common/application/usecase';
 
 @Injectable()
 export class WithdrawUseCase

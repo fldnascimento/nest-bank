@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ClientEntity } from 'src/domain/client/entities/client.entity';
-import { ClientService } from 'src/domain/client/interfaces/services/client.service';
-import { UseCase } from 'src/domain/common/application/usecase';
+import { ClientEntity } from '@domain/client/entities/client.entity';
+import { ClientService } from '@domain/client/interfaces/services/client.service';
+import { UseCase } from '@domain/common/application/usecase';
 
 @Injectable()
 export class GetClientUseCase implements UseCase<string, ClientEntity> {

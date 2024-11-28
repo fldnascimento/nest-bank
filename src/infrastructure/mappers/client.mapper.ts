@@ -1,8 +1,8 @@
-import { ClientEntity } from 'src/domain/client/entities/client.entity';
-import { ClientModel } from '../database/models/client.model';
 import { Injectable } from '@nestjs/common';
-import { BankAccountEntity } from 'src/domain/bank-account/entities/bank-account.entity';
-import { Mapper } from 'src/domain/common/infrastructure/mapper';
+import { ClientEntity } from '@domain/client/entities/client.entity';
+import { BankAccountEntity } from '@domain/bank-account/entities/bank-account.entity';
+import { Mapper } from '@domain/common/infrastructure/mapper';
+import { ClientModel } from '@infrastructure/database/models/client.model';
 
 @Injectable()
 export class ClientMapper implements Mapper<ClientEntity, ClientModel> {

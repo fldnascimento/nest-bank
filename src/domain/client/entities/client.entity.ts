@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
-import { BankAccountEntity } from 'src/domain/bank-account/entities/bank-account.entity';
-import { Entity } from 'src/domain/common/domain/entity';
-import { InvalidCpfException } from '../exceptions/invalid-cpf.exception';
+import { Entity } from '@domain/common/domain/entity';
+import { BankAccountEntity } from '@domain/bank-account/entities/bank-account.entity';
+import { InvalidCpfException } from '@domain/client/exceptions/invalid-cpf.exception';
 
 type ClientProps = {
   fullName: string;

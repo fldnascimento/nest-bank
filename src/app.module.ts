@@ -1,56 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { BankAccountModel } from './infrastructure/database/models/bank-account.model';
-import { ClientModel } from './infrastructure/database/models/client.model';
-import { TransactionModel } from './infrastructure/database/models/transaction.model';
-import { BankAccountMapper } from './infrastructure/mappers/bank-account.mapper';
-import { ClientMapper } from './infrastructure/mappers/client.mapper';
-import { ClientController } from './presentation/controllers/client.controller';
-import { BankAccountController } from './presentation/controllers/bank-account.controller';
-import { ClientImplRepository } from './infrastructure/repositories/client-impl.repository';
-import { BankAccountImplRepository } from './infrastructure/repositories/bank-account-impl.repository';
-import { BankAccountImplService } from './domain/bank-account/services/bank-account-impl.service';
-import { CreateClientUseCase } from './application/client/usecases/create-client.usecase';
-import { GetClientUseCase } from './application/client/usecases/get-client.usecase';
-import { CreateBankAccountUseCase } from './application/bank-account/usecases/create-bank-account.usecase';
-import { DepositUseCase } from './application/bank-account/usecases/deposit.usecase';
-import { WithdrawUseCase } from './application/bank-account/usecases/withdraw.usecase';
-import { GetBankAccountUseCase } from './application/bank-account/usecases/get-bank-account.usecase';
-import { ClientImplService } from './domain/client/services/client-impl.service';
+import appplication from '@application/index';
+import domain from '@domain/index';
+import infrastructure, { models } from '@infrastructure/index';
+import presentation from '@presentation/index';
 
-const mappers = [BankAccountMapper, ClientMapper];
-const repositories = [
-  {
-    provide: 'BankAccountRepository',
-    useClass: BankAccountImplRepository,
-  },
-  {
-    provide: 'ClientRepository',
-    useClass: ClientImplRepository,
-  },
-];
-
-const domainServices = [
-  {
-    provide: 'BankAccountService',
-    useClass: BankAccountImplService,
-  },
-  {
-    provide: 'ClientService',
-    useClass: ClientImplService,
-  },
-];
-const usecases = [
-  CreateBankAccountUseCase,
-  DepositUseCase,
-  WithdrawUseCase,
-  GetBankAccountUseCase,
-  GetClientUseCase,
-  CreateClientUseCase,
-];
-
-const models = [BankAccountModel, ClientModel, TransactionModel];
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -67,7 +22,7 @@ const models = [BankAccountModel, ClientModel, TransactionModel];
       models: models,
     }),
   ],
-  controllers: [BankAccountController, ClientController],
-  providers: [...domainServices, ...repositories, ...usecases, ...mappers],
+  controllers: presentation,
+  providers: [...domain, ...infrastructure, ...appplication],
 })
 export class AppModule {}

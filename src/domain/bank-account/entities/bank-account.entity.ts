@@ -1,4 +1,4 @@
-import { Entity } from 'src/domain/common/domain/entity';
+import { Entity } from '@domain/common/domain/entity';
 import { TransactionEntity } from './transaction.entity';
 import { randomUUID } from 'node:crypto';
 

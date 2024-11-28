@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ClientEntity } from '../entities/client.entity';
-import { ClientRepository } from '../interfaces/repositories/client.repository';
-import { ClientNotFoundException } from '../exceptions/client-not-found.exception';
-import { ClientAlreadyExistsException } from '../exceptions/client-already-exists.exception';
-import { ClientService } from '../interfaces/services/client.service';
+import { ClientEntity } from '@domain/client/entities/client.entity';
+import { ClientRepository } from '@domain/client/interfaces/repositories/client.repository';
+import { ClientNotFoundException } from '@domain/client/exceptions/client-not-found.exception';
+import { ClientAlreadyExistsException } from '@domain/client/exceptions/client-already-exists.exception';
+import { ClientService } from '@domain/client/interfaces/services/client.service';
 
 @Injectable()
 export class ClientImplService implements ClientService {
