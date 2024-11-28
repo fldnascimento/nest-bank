@@ -1,29 +1,38 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
-import { BankAccountApplicationService } from 'src/application/bank-account/services/bank-account-application.service';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { CreateBankAccountDto } from 'src/application/bank-account/dto/create-bank-account.dto';
+import { DepositDto } from 'src/application/bank-account/dto/deposit.dto';
+import { WithdrawDto } from 'src/application/bank-account/dto/withdraw.dto';
+import { CreateBankAccountUseCase } from 'src/application/bank-account/usecases/create-bank-account.usecase';
+import { DepositUseCase } from 'src/application/bank-account/usecases/deposit.usecase';
+import { GetBankAccountUseCase } from 'src/application/bank-account/usecases/get-bank-account.usecase';
+import { WithdrawUseCase } from 'src/application/bank-account/usecases/withdraw.usecase';
 
 @Controller('bank-account')
 export class BankAccountController {
   constructor(
-    private readonly bankAccountApplicationService: BankAccountApplicationService,
+    private readonly createBankAccountUseCase: CreateBankAccountUseCase,
+    private readonly depositUseCase: DepositUseCase,
+    private readonly withdrawUseCase: WithdrawUseCase,
+    private readonly getBankAccountUseCase: GetBankAccountUseCase,
   ) {}
 
   @Get(':id')
   getHello(@Param('id') id: string) {
-    return this.bankAccountApplicationService.getAccountById(id);
+    return this.getBankAccountUseCase.execute(id);
   }
 
-  @Post(':clientId')
-  createBankAccount(@Param('clientId') clientId: string) {
-    return this.bankAccountApplicationService.createBankAccount(clientId);
+  @Post()
+  createBankAccount(@Body() body: CreateBankAccountDto) {
+    return this.createBankAccountUseCase.execute(body);
   }
 
-  @Post(':id/deposit/:amount')
-  deposit(@Param('id') id: string, @Param('amount') amount: number) {
-    return this.bankAccountApplicationService.deposit(id, +amount);
+  @Post('deposit')
+  deposit(@Body() body: DepositDto) {
+    return this.depositUseCase.execute(body);
   }
 
-  @Post(':id/withdraw/:amount')
-  withdraw(@Param('id') id: string, @Param('amount') amount: number) {
-    return this.bankAccountApplicationService.withdraw(id, +amount);
+  @Post('withdraw')
+  withdraw(@Body() body: WithdrawDto) {
+    return this.withdrawUseCase.execute(body);
   }
 }

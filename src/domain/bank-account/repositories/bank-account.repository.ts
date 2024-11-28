@@ -5,4 +5,5 @@ export interface BankAccountRepository extends Repo<BankAccountEntity> {
   save(bankAccount: BankAccountEntity): Promise<BankAccountEntity>;
   findById(id: string): Promise<BankAccountEntity | null>;
   update(bankAccount: BankAccountEntity): Promise<void>;
+  findByAccountNumber(accountNumber: string): Promise<BankAccountEntity | null>;
 }

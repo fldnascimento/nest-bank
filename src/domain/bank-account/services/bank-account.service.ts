@@ -24,38 +24,47 @@ export class BankAccountService {
     return account;
   }
 
+  async getAccountByNumber(accountNumber: string): Promise<BankAccountEntity> {
+    const account =
+      await this.accountRepository.findByAccountNumber(accountNumber);
+    if (!account) {
+      throw new BankAccountNotFoundException();
+    }
+    return account;
+  }
+
   async deposit(
-    bankAccountId: string,
+    accountNumber: string,
     amount: number,
   ): Promise<BankAccountEntity> {
-    const bankAccount = await this.getAccountById(bankAccountId);
+    const account = await this.getAccountByNumber(accountNumber);
 
     if (amount < 0) {
       throw new AmountMustBePositiveException();
     }
 
-    bankAccount.deposit(amount);
-    await this.accountRepository.update(bankAccount);
+    account.deposit(amount);
+    await this.accountRepository.update(account);
 
-    return bankAccount;
+    return account;
   }
 
   async withdraw(
-    bankAccountId: string,
+    accountNumber: string,
     amount: number,
   ): Promise<BankAccountEntity> {
-    const bankAccount = await this.getAccountById(bankAccountId);
+    const account = await this.getAccountByNumber(accountNumber);
     if (amount < 0) {
       throw new AmountMustBePositiveException();
     }
 
-    if (bankAccount.balance < amount) {
+    if (account.balance < amount) {
       throw new BalanceInsufficientException();
     }
 
-    bankAccount.withdraw(amount);
-    await this.accountRepository.update(bankAccount);
+    account.withdraw(amount);
+    await this.accountRepository.update(account);
 
-    return bankAccount;
+    return account;
   }
 }

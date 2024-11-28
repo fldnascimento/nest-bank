@@ -15,11 +15,15 @@ export class BankAccountEntity extends Entity<BankAccountProps> {
     super(props, id);
   }
 
-  static new(
-    props: Omit<BankAccountProps, 'transactions' | 'balance' | 'isActive'>,
-  ) {
+  static new(props: Omit<BankAccountProps, 'transactions' | 'accountNumber'>) {
     return new BankAccountEntity(
-      { ...props, transactions: [], balance: 0, isActive: true },
+      {
+        ...props,
+        accountNumber: randomUUID().split('-')[0],
+        transactions: [],
+        balance: props?.balance || 0,
+        isActive: props?.isActive || true,
+      },
       randomUUID(),
     );
   }

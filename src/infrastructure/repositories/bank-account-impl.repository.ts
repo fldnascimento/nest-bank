@@ -15,6 +15,7 @@ export class BankAccountImplRepository implements BankAccountRepository {
     const accountModel = await BankAccountModel.create(accountData.toJSON());
     return this.bankAccountMapper.toEntity(accountModel);
   }
+
   async findById(id: string): Promise<BankAccountEntity | null> {
     const account = await BankAccountModel.findByPk(id, {
       include: ['transactions'],
@@ -25,6 +26,7 @@ export class BankAccountImplRepository implements BankAccountRepository {
     }
     return this.bankAccountMapper.toEntity(account);
   }
+
   async update(bankAccount: BankAccountEntity): Promise<void> {
     const accountData = this.bankAccountMapper.toModel(bankAccount);
 
@@ -44,5 +46,21 @@ export class BankAccountImplRepository implements BankAccountRepository {
       });
     }
     await BankAccountModel.upsert(accountData.toJSON());
+  }
+
+  async findByAccountNumber(
+    accountNumber: string,
+  ): Promise<BankAccountEntity | null> {
+    const account = await BankAccountModel.findOne({
+      where: {
+        accountNumber,
+      },
+      include: ['transactions'],
+    });
+
+    if (!account) {
+      return null;
+    }
+    return this.bankAccountMapper.toEntity(account);
   }
 }
