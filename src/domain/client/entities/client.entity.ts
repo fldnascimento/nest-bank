@@ -2,6 +2,8 @@ import { randomUUID } from 'node:crypto';
 import { Entity } from '@domain/common/domain/entity';
 import { BankAccountEntity } from '@domain/bank-account/entities/bank-account.entity';
 import { InvalidCpfException } from '@domain/client/exceptions/invalid-cpf.exception';
+import { InvalidFullNameException } from '@domain/client/exceptions/invalid-full-name.exception';
+import { InvalidBirthDateException } from '@domain/client/exceptions/invalid-birth-date.exception';
 
 type ClientProps = {
   fullName: string;
@@ -44,7 +46,7 @@ export class ClientEntity extends Entity<ClientProps> {
 
   setFullName(fullName: string): void {
     if (!fullName || fullName.trim().length < 3) {
-      throw new Error('Full name must be at least 3 characters long.');
+      throw new InvalidFullNameException();
     }
     this._props.fullName = fullName.trim();
   }
@@ -60,15 +62,12 @@ export class ClientEntity extends Entity<ClientProps> {
   setBirthDate(birthDate: Date): void {
     const now = new Date();
     if (birthDate > now) {
-      throw new Error('Birth date cannot be in the future.');
+      throw new InvalidBirthDateException();
     }
     this._props.birthDate = birthDate;
   }
 
   addBankAccount(bankAccount: BankAccountEntity): void {
-    if (this._props.bankAccounts.some((acc) => acc.id === bankAccount.id)) {
-      throw new Error('Bank account already exists for this client.');
-    }
     this._props.bankAccounts.push(bankAccount);
   }
 
