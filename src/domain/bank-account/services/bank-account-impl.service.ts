@@ -8,6 +8,7 @@ import { BankAccountService } from '@domain/bank-account/interfaces/services/ban
 import { TransferToTheSameAccountException } from '@domain/bank-account/exceptions/transfer-to-the-same-account.exception';
 import { ClientRepository } from '@domain/client/interfaces/repositories/client.repository';
 import { ClientNotFoundException } from '@domain/client/exceptions/client-not-found.exception';
+import { BankAccountInactiveException } from '@domain/bank-account/exceptions/bank-account-inactive.exception';
 
 @Injectable()
 export class BankAccountImplService implements BankAccountService {
@@ -113,12 +114,24 @@ export class BankAccountImplService implements BankAccountService {
       );
     }
 
+    if (!fromAccount.isActive) {
+      throw new BankAccountInactiveException(
+        `Conta origem ${fromAccountNumber} não está ativa`,
+      );
+    }
+
     const toAccount =
       await this.accountRepository.findByAccountNumber(toAccountNumber);
 
     if (!toAccount) {
       throw new BankAccountNotFoundException(
         `Conta destino ${toAccountNumber} não encontrada`,
+      );
+    }
+
+    if (!toAccount.isActive) {
+      throw new BankAccountInactiveException(
+        `Conta destino ${toAccountNumber} não está ativa`,
       );
     }
 
