@@ -4,7 +4,7 @@ import { BankAccountEntity } from 'src/domain/bank-account/entities/bank-account
 import { BankAccountModel } from '../database/models/bank-account.model';
 import { Injectable } from '@nestjs/common';
 import { TransactionModel } from '../database/models/transaction.model';
-import { randomUUID } from 'crypto';
+import { randomUUID } from 'node:crypto';
 
 @Injectable()
 export class BankAccountImplRepository implements BankAccountRepository {

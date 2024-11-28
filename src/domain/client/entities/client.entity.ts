@@ -1,4 +1,4 @@
-import { randomUUID } from 'crypto';
+import { randomUUID } from 'node:crypto';
 import { BankAccountEntity } from 'src/domain/bank-account/entities/bank-account.entity';
 import { Entity } from 'src/domain/common/domain/entity';
 import { InvalidCpfException } from '../exceptions/invalid-cpf.exception';
