@@ -4,12 +4,15 @@ import { DepositUseCase } from '@application/bank-account/usecases/deposit.useca
 import { WithdrawUseCase } from '@application/bank-account/usecases/withdraw.usecase';
 import { DepositDto } from '@application/bank-account/dto/deposit.dto';
 import { WithdrawDto } from '@application/bank-account/dto/withdraw.dto';
+import { TransferUseCase } from '@application/bank-account/usecases/transfer.usecase';
+import { TransferDto } from '@application/bank-account/dto/transfer.dto';
 
 @Controller('transaction')
 export class TransactionController {
   constructor(
     private readonly depositUseCase: DepositUseCase,
     private readonly withdrawUseCase: WithdrawUseCase,
+    private readonly transferUseCase: TransferUseCase,
   ) {}
 
   @Post('deposit')
@@ -26,5 +29,13 @@ export class TransactionController {
   })
   withdraw(@Body() body: WithdrawDto) {
     return this.withdrawUseCase.execute(body);
+  }
+
+  @Post('transfer')
+  @ApiOperation({
+    summary: 'Realiza uma transferência entre contas',
+  })
+  transfer(@Body() body: TransferDto) {
+    return this.transferUseCase.execute(body);
   }
 }

@@ -11,4 +11,9 @@ export interface BankAccountService extends Service {
     accountNumber: string,
     status: boolean,
   ): Promise<BankAccountEntity>;
+  transfer(
+    fromAccountNumber: string,
+    toAccountNumber: string,
+    amount: number,
+  ): Promise<BankAccountEntity>;
 }

@@ -1,6 +1,7 @@
 import { CreateBankAccountUseCase } from './bank-account/usecases/create-bank-account.usecase';
 import { DepositUseCase } from './bank-account/usecases/deposit.usecase';
 import { GetBankAccountUseCase } from './bank-account/usecases/get-bank-account.usecase';
+import { TransferUseCase } from './bank-account/usecases/transfer.usecase';
 import { UpdateBankAccountUseCase } from './bank-account/usecases/update-bank-account.usecase';
 import { WithdrawUseCase } from './bank-account/usecases/withdraw.usecase';
 import { CreateClientUseCase } from './client/usecases/create-client.usecase';
@@ -12,6 +13,7 @@ const bankAccountUseCases = [
   GetBankAccountUseCase,
   WithdrawUseCase,
   UpdateBankAccountUseCase,
+  TransferUseCase,
 ];
 
 const clientUseCases = [CreateClientUseCase, GetClientUseCase];

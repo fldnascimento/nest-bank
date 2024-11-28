@@ -34,6 +34,7 @@ export class ClientMapper implements Mapper<ClientEntity, ClientModel> {
         fullName: clientModel.fullName,
         cpf: clientModel.cpf,
         birthDate: clientModel.birthDate,
+        bankAccounts: [],
       },
       clientModel.id,
     );

@@ -4,4 +4,7 @@ import { BankAccountEntity } from '@domain/bank-account/entities/bank-account.en
 export interface BankAccountRepository extends Repo<BankAccountEntity> {
   update(bankAccount: BankAccountEntity): Promise<void>;
   findByAccountNumber(accountNumber: string): Promise<BankAccountEntity | null>;
+  findByAccountNumberWithDestinactionAccount(
+    accountNumber: string,
+  ): Promise<BankAccountEntity | null>;
 }

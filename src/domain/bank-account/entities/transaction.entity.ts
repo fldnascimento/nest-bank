@@ -38,4 +38,13 @@ export class TransactionEntity extends Entity<TransactionProps> {
   get destinationAccount(): BankAccountEntity | undefined {
     return this._props.destinationAccount;
   }
+
+  toJSON() {
+    return {
+      id: this._id,
+      ...this._props,
+      destinationAccount:
+        this._props.destinationAccount?.accountNumber || undefined,
+    } as any;
+  }
 }

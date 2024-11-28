@@ -34,7 +34,6 @@ export class BankAccountImplRepository implements BankAccountRepository {
       (transaction) => !transaction.id,
     );
 
-    // TODO: Melhorar essa parte
     for (const transaction of transactions) {
       await TransactionModel.create({
         id: randomUUID(),
@@ -56,6 +55,33 @@ export class BankAccountImplRepository implements BankAccountRepository {
         accountNumber,
       },
       include: ['transactions'],
+    });
+
+    if (!account) {
+      return null;
+    }
+    return this.bankAccountMapper.toEntity(account);
+  }
+
+  async findByAccountNumberWithDestinactionAccount(
+    accountNumber: string,
+  ): Promise<BankAccountEntity | null> {
+    const account = await BankAccountModel.findOne({
+      where: {
+        accountNumber,
+      },
+      include: [
+        {
+          model: TransactionModel,
+          as: 'transactions',
+          include: [
+            {
+              model: BankAccountModel,
+              as: 'destinationAccount',
+            },
+          ],
+        },
+      ],
     });
 
     if (!account) {
