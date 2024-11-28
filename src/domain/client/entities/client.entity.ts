@@ -50,6 +50,7 @@ export class ClientEntity extends Entity<ClientProps> {
   }
 
   setCpf(cpf: string): void {
+    cpf = cpf.replace(/[^0-9]/g, '');
     if (!this.isValidCpf(cpf)) {
       throw new InvalidCpfException();
     }
@@ -72,6 +73,18 @@ export class ClientEntity extends Entity<ClientProps> {
   }
 
   private isValidCpf(cpf: string): boolean {
-    return cpf.length === 11;
+    const digits = cpf.split('').map((el) => +el);
+
+    function getVerifyingDigit(arr: number[]) {
+      const reduced = arr.reduce(
+        (sum, digit, index) => sum + digit * (arr.length - index + 1),
+        0,
+      );
+      return ((reduced * 10) % 11) % 10;
+    }
+    return (
+      getVerifyingDigit(digits.slice(0, 9)) === digits[9] &&
+      getVerifyingDigit(digits.slice(0, 10)) === digits[10]
+    );
   }
 }

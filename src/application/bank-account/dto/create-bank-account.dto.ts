@@ -13,6 +13,7 @@ export class CreateBankAccountDto {
   @ApiProperty({
     type: 'number',
     description: 'Saldo inicial',
+    example: 10,
   })
   balance: number;
 
@@ -21,11 +22,12 @@ export class CreateBankAccountDto {
   @ApiProperty({
     type: 'boolean',
     description: 'Status da conta',
+    example: true,
   })
   isActive: boolean;
 
-  @IsString()
-  @IsNotEmpty()
+  @IsString({ message: 'O ID do cliente é do tipo string' })
+  @IsNotEmpty({ message: 'O ID do cliente é obrigatório' })
   @ApiProperty({
     type: 'string',
     description: 'ID do cliente',
