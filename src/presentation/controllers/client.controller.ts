@@ -13,7 +13,7 @@ export class ClientController {
 
   @Get(':id')
   @ApiOperation({
-    summary: 'API para buscar cliente por ID',
+    summary: 'Consulta cliente por ID',
   })
   getHello(@Param('id') id: string) {
     return this.getClientUseCase.execute(id);
@@ -21,7 +21,7 @@ export class ClientController {
 
   @Post()
   @ApiOperation({
-    summary: 'API para cadastrar cliente',
+    summary: 'Cria cliente',
   })
   createClient(@Body() body: CreateClientDto) {
     return this.createClientUseCase.execute(body);
