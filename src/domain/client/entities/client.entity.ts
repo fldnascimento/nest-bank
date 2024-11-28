@@ -74,6 +74,10 @@ export class ClientEntity extends Entity<ClientProps> {
 
   private isValidCpf(cpf: string): boolean {
     const digits = cpf.split('').map((el) => +el);
+    const hasEmpty = digits.filter((d) => d !== digits[0]).length;
+    if (hasEmpty === 0) {
+      return false;
+    }
 
     function getVerifyingDigit(arr: number[]) {
       const reduced = arr.reduce(

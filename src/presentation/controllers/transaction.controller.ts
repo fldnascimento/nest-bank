@@ -1,11 +1,13 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { ApiOperation } from '@nestjs/swagger';
 import { DepositUseCase } from '@application/bank-account/usecases/deposit.usecase';
 import { WithdrawUseCase } from '@application/bank-account/usecases/withdraw.usecase';
 import { DepositDto } from '@application/bank-account/dto/deposit.dto';
 import { WithdrawDto } from '@application/bank-account/dto/withdraw.dto';
 import { TransferUseCase } from '@application/bank-account/usecases/transfer.usecase';
 import { TransferDto } from '@application/bank-account/dto/transfer.dto';
+import { DepositSwagger } from '@presentation/swagger/transaction/deposit.swagger';
+import { WithdrawSwagger } from '@presentation/swagger/transaction/withdraw.swagger';
+import { TransferSwagger } from '@presentation/swagger/transaction/transfer.swagger';
 
 @Controller('transaction')
 export class TransactionController {
@@ -16,25 +18,19 @@ export class TransactionController {
   ) {}
 
   @Post('deposit')
-  @ApiOperation({
-    summary: 'Realiza um depósito em uma conta',
-  })
+  @DepositSwagger()
   deposit(@Body() body: DepositDto) {
     return this.depositUseCase.execute(body);
   }
 
   @Post('withdraw')
-  @ApiOperation({
-    summary: 'Realiza um saque em uma conta',
-  })
+  @WithdrawSwagger()
   withdraw(@Body() body: WithdrawDto) {
     return this.withdrawUseCase.execute(body);
   }
 
   @Post('transfer')
-  @ApiOperation({
-    summary: 'Realiza uma transferência entre contas',
-  })
+  @TransferSwagger()
   transfer(@Body() body: TransferDto) {
     return this.transferUseCase.execute(body);
   }
