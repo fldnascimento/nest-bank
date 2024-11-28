@@ -8,11 +8,10 @@ export class BankAccountApplicationService {
   constructor(private readonly bankAccountService: BankAccountService) {}
 
   async createBankAccount(clientId: string): Promise<void> {
-    const bankAccount = new BankAccountEntity(
-      randomUUID(),
-      randomUUID(),
+    const bankAccount = BankAccountEntity.new({
+      accountNumber: randomUUID().split('-')[0],
       clientId,
-    );
+    });
     await this.bankAccountService.createAccount(bankAccount);
   }
 
@@ -20,32 +19,14 @@ export class BankAccountApplicationService {
     bankAccountId: string,
     amount: number,
   ): Promise<BankAccountEntity> {
-    const bankAccount =
-      await this.bankAccountService.getAccountById(bankAccountId);
-    if (!bankAccount) {
-      throw new Error('Bank account not found');
-    }
-
-    bankAccount.deposit(amount);
-    await this.bankAccountService.updateAccount(bankAccount);
-
-    return bankAccount;
+    return this.bankAccountService.deposit(bankAccountId, amount);
   }
 
   async withdraw(
     bankAccountId: string,
     amount: number,
   ): Promise<BankAccountEntity> {
-    const bankAccount =
-      await this.bankAccountService.getAccountById(bankAccountId);
-    if (!bankAccount) {
-      throw new Error('Bank account not found');
-    }
-
-    bankAccount.withdraw(amount);
-    await this.bankAccountService.updateAccount(bankAccount);
-
-    return bankAccount;
+    return this.bankAccountService.withdraw(bankAccountId, amount);
   }
 
   async getAccountById(id: string): Promise<BankAccountEntity> {

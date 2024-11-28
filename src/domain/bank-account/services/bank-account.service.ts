@@ -1,6 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { BankAccountEntity } from '../entities/bank-account.entity';
 import { BankAccountRepository } from '../repositories/bank-account.repository';
+import { BankAccountNotFoundException } from 'src/domain/bank-account/exceptions/bank-account-not-found.exception';
+import { AmountMustBePositiveException } from 'src/domain/bank-account/exceptions/amount-must-be-positive.exception';
+import { BalanceInsufficientException } from 'src/domain/bank-account/exceptions/balance-insufficient.exception';
 
 @Injectable()
 export class BankAccountService {
@@ -9,15 +12,50 @@ export class BankAccountService {
     private readonly accountRepository: BankAccountRepository,
   ) {}
 
-  async createAccount(account: BankAccountEntity): Promise<void> {
+  async createAccount(account: BankAccountEntity): Promise<BankAccountEntity> {
     return this.accountRepository.save(account);
   }
 
   async getAccountById(id: string): Promise<BankAccountEntity> {
-    return this.accountRepository.findById(id);
+    const account = await this.accountRepository.findById(id);
+    if (!account) {
+      throw new BankAccountNotFoundException();
+    }
+    return account;
   }
 
-  async updateAccount(account: BankAccountEntity): Promise<void> {
-    return this.accountRepository.update(account);
+  async deposit(
+    bankAccountId: string,
+    amount: number,
+  ): Promise<BankAccountEntity> {
+    const bankAccount = await this.getAccountById(bankAccountId);
+
+    if (amount < 0) {
+      throw new AmountMustBePositiveException();
+    }
+
+    bankAccount.deposit(amount);
+    await this.accountRepository.update(bankAccount);
+
+    return bankAccount;
+  }
+
+  async withdraw(
+    bankAccountId: string,
+    amount: number,
+  ): Promise<BankAccountEntity> {
+    const bankAccount = await this.getAccountById(bankAccountId);
+    if (amount < 0) {
+      throw new AmountMustBePositiveException();
+    }
+
+    if (bankAccount.balance < amount) {
+      throw new BalanceInsufficientException();
+    }
+
+    bankAccount.withdraw(amount);
+    await this.accountRepository.update(bankAccount);
+
+    return bankAccount;
   }
 }

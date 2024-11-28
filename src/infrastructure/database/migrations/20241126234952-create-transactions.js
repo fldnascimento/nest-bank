@@ -14,7 +14,7 @@ module.exports = {
         allowNull: false,
       },
       type: {
-        type: Sequelize.ENUM('deposit', 'withdraw', 'transfer'),
+        type: Sequelize.ENUM('CREDIT', 'DEBIT', 'TRANSFER'),
         allowNull: false,
       },
       source_account_id: {

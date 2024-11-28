@@ -4,22 +4,20 @@ import { BankAccountEntity } from './bank-account.entity';
 export const transactionsTypes = ['CREDIT', 'DEBIT', 'TRANSFER'] as const;
 export type TransactionType = (typeof transactionsTypes)[number];
 
-export class TransactionEntity extends Entity {
-  private _type: TransactionType;
-  private _amount: number;
-  private _timestamp: Date;
-  private _destinationAccount?: BankAccountEntity;
+type TransactionProps = {
+  type: TransactionType;
+  amount: number;
+  date: Date;
+  destinationAccount?: BankAccountEntity;
+};
 
-  constructor(
-    type: TransactionType,
-    amount: number,
-    destinationAccount?: BankAccountEntity,
-  ) {
-    super();
-    this._type = type;
-    this._amount = amount;
-    this._timestamp = new Date();
-    this._destinationAccount = destinationAccount;
+export class TransactionEntity extends Entity<TransactionProps> {
+  constructor(props: TransactionProps, id?: string) {
+    super(props, id);
+  }
+
+  static new(props: Omit<TransactionProps, 'date'>) {
+    return new TransactionEntity({ ...props, date: new Date() });
   }
 
   get id(): string {
@@ -27,17 +25,17 @@ export class TransactionEntity extends Entity {
   }
 
   get type(): TransactionType {
-    return this._type;
+    return this._props.type;
   }
 
   get amount(): number {
-    return this._amount;
+    return this._props.amount;
   }
 
-  get timestamp(): Date {
-    return this._timestamp;
+  get date(): Date {
+    return this._props.date;
   }
   get destinationAccount(): BankAccountEntity | undefined {
-    return this._destinationAccount;
+    return this._props.destinationAccount;
   }
 }

@@ -1,25 +1,27 @@
 import { Entity } from 'src/domain/common/domain/entity';
 import { TransactionEntity } from './transaction.entity';
+import { randomUUID } from 'crypto';
 
-export class BankAccountEntity extends Entity {
-  private _accountNumber: string;
-  private _balance: number;
-  private _isActive: boolean;
-  private _clientId: string;
-  private _transactions: TransactionEntity[] = [];
+type BankAccountProps = {
+  accountNumber: string;
+  balance: number;
+  isActive: boolean;
+  clientId: string;
+  transactions?: TransactionEntity[];
+};
 
-  constructor(
-    id: string,
-    accountNumber: string,
-    clientId: string,
-    balance: number = 0,
-    isActive: boolean = true,
+export class BankAccountEntity extends Entity<BankAccountProps> {
+  constructor(props: BankAccountProps, id?: string) {
+    super(props, id);
+  }
+
+  static new(
+    props: Omit<BankAccountProps, 'transactions' | 'balance' | 'isActive'>,
   ) {
-    super(id);
-    this._accountNumber = accountNumber;
-    this._balance = balance;
-    this._isActive = isActive;
-    this._clientId = clientId;
+    return new BankAccountEntity(
+      { ...props, transactions: [], balance: 0, isActive: true },
+      randomUUID(),
+    );
   }
 
   get id(): string {
@@ -27,46 +29,69 @@ export class BankAccountEntity extends Entity {
   }
 
   get accountNumber(): string {
-    return this._accountNumber;
+    return this._props.accountNumber;
   }
 
   get balance(): number {
-    return this._balance;
+    return this._props.balance;
   }
 
   get isActive(): boolean {
-    return this._isActive;
+    return this._props.isActive;
   }
 
   get clientId(): string {
-    return this._clientId;
+    return this._props.clientId;
   }
 
-  deposit(amount: number) {
-    if (this._isActive) {
-      this._balance += amount;
-      this.addTransaction(new TransactionEntity('CREDIT', amount));
+  get transactions(): TransactionEntity[] {
+    return this._props.transactions;
+  }
+
+  public deposit(amount: number) {
+    if (this._props.isActive) {
+      this._props.balance += amount;
+      this.addTransaction(
+        new TransactionEntity({
+          type: 'CREDIT',
+          amount: amount,
+          date: new Date(),
+        }),
+      );
     }
   }
 
-  withdraw(amount: number) {
+  public withdraw(amount: number) {
     if (this.isActive && this.balance >= amount) {
-      this._balance -= amount;
-      this.addTransaction(new TransactionEntity('DEBIT', amount));
+      this._props.balance -= amount;
+      this.addTransaction(
+        TransactionEntity.new({
+          type: 'DEBIT',
+          amount: amount,
+        }),
+      );
     }
   }
 
-  transfer(destinationAccount: BankAccountEntity, amount: number) {
+  public transfer(destinationAccount: BankAccountEntity, amount: number) {
     if (this.isActive && this.balance >= amount) {
-      this._balance -= amount;
+      this._props.balance -= amount;
       destinationAccount.deposit(amount);
       this.addTransaction(
-        new TransactionEntity('TRANSFER', amount, destinationAccount),
+        TransactionEntity.new({
+          type: 'TRANSFER',
+          amount: amount,
+          destinationAccount: destinationAccount,
+        }),
       );
     }
   }
 
   private addTransaction(transaction: TransactionEntity) {
-    this._transactions.push(transaction);
+    this._props.transactions.push(transaction);
+  }
+
+  public setTransactions(transactions: TransactionEntity[]) {
+    this._props.transactions = transactions;
   }
 }

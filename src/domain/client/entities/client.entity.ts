@@ -1,17 +1,25 @@
+import { randomUUID } from 'crypto';
 import { BankAccountEntity } from 'src/domain/bank-account/entities/bank-account.entity';
 import { Entity } from 'src/domain/common/domain/entity';
+import { InvalidCpfException } from '../exceptions/invalid-cpf.exception';
 
-export class ClientEntity extends Entity {
-  private _fullName: string;
-  private _cpf: string;
-  private _birthDate: Date;
-  private _bankAccounts: BankAccountEntity[] = [];
+type ClientProps = {
+  fullName: string;
+  cpf: string;
+  birthDate: Date;
+  bankAccounts?: BankAccountEntity[];
+};
 
-  constructor(id: string, fullName: string, cpf: string, birthDate: Date) {
-    super(id);
-    this.setFullName(fullName);
-    this.setCpf(cpf);
-    this.setBirthDate(birthDate);
+export class ClientEntity extends Entity<ClientProps> {
+  constructor(props: ClientProps, id?: string) {
+    super(props, id);
+    this.setFullName(props.fullName);
+    this.setCpf(props.cpf);
+    this.setBirthDate(props.birthDate);
+  }
+
+  static new(props: Omit<ClientProps, 'bankAccounts'>) {
+    return new ClientEntity({ ...props, bankAccounts: [] }, randomUUID());
   }
 
   get id(): string {
@@ -19,34 +27,33 @@ export class ClientEntity extends Entity {
   }
 
   get fullName(): string {
-    return this._fullName;
+    return this._props.fullName;
   }
 
   get cpf(): string {
-    return this._cpf;
+    return this._props.cpf;
   }
 
   get birthDate(): Date {
-    return this._birthDate;
+    return this._props.birthDate;
   }
 
   get accounts(): BankAccountEntity[] {
-    return this._bankAccounts;
+    return this._props.bankAccounts;
   }
 
-  // Setters
   setFullName(fullName: string): void {
     if (!fullName || fullName.trim().length < 3) {
       throw new Error('Full name must be at least 3 characters long.');
     }
-    this._fullName = fullName.trim();
+    this._props.fullName = fullName.trim();
   }
 
   setCpf(cpf: string): void {
     if (!this.isValidCpf(cpf)) {
-      throw new Error('Invalid CPF.');
+      throw new InvalidCpfException();
     }
-    this._cpf = cpf;
+    this._props.cpf = cpf;
   }
 
   setBirthDate(birthDate: Date): void {
@@ -54,21 +61,14 @@ export class ClientEntity extends Entity {
     if (birthDate > now) {
       throw new Error('Birth date cannot be in the future.');
     }
-    this._birthDate = birthDate;
+    this._props.birthDate = birthDate;
   }
 
-  // Domain Behavior
   addBankAccount(bankAccount: BankAccountEntity): void {
-    if (this._bankAccounts.some((acc) => acc.id === bankAccount.id)) {
+    if (this._props.bankAccounts.some((acc) => acc.id === bankAccount.id)) {
       throw new Error('Bank account already exists for this client.');
     }
-    this._bankAccounts.push(bankAccount);
-  }
-
-  removeBankAccount(accountId: string): void {
-    this._bankAccounts = this._bankAccounts.filter(
-      (acc) => acc.id !== accountId,
-    );
+    this._props.bankAccounts.push(bankAccount);
   }
 
   private isValidCpf(cpf: string): boolean {

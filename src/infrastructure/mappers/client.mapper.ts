@@ -7,7 +7,7 @@ import { Mapper } from 'src/domain/common/infrastructure/mapper';
 @Injectable()
 export class ClientMapper implements Mapper<ClientEntity, ClientModel> {
   toModel(entity: ClientEntity): ClientModel {
-    const accounts = entity.accounts.map((account) => {
+    const accounts = entity?.accounts?.map((account) => {
       return {
         id: account.id,
         accountNumber: account.accountNumber,
@@ -30,20 +30,24 @@ export class ClientMapper implements Mapper<ClientEntity, ClientModel> {
 
   toEntity(clientModel: ClientModel): ClientEntity {
     const client = new ClientEntity(
+      {
+        fullName: clientModel.fullName,
+        cpf: clientModel.cpf,
+        birthDate: clientModel.birthDate,
+      },
       clientModel.id,
-      clientModel.fullName,
-      clientModel.cpf,
-      clientModel.birthDate,
     );
 
-    clientModel.accounts.forEach((account) => {
+    clientModel?.accounts?.forEach((account) => {
       client.addBankAccount(
         new BankAccountEntity(
+          {
+            accountNumber: account.accountNumber,
+            clientId: client.id,
+            balance: account.balance,
+            isActive: account.isActive,
+          },
           account.id,
-          account.accountNumber,
-          client.id,
-          account.balance,
-          account.isActive,
         ),
       );
     });
