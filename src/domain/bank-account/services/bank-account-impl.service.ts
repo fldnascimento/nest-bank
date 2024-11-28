@@ -6,15 +6,23 @@ import { BalanceInsufficientException } from '@domain/bank-account/exceptions/ba
 import { BankAccountRepository } from '@domain/bank-account/interfaces/repositories/bank-account.repository';
 import { BankAccountService } from '@domain/bank-account/interfaces/services/bank-account.service';
 import { TransferToTheSameAccountException } from '@domain/bank-account/exceptions/transfer-to-the-same-account.exception';
+import { ClientRepository } from '@domain/client/interfaces/repositories/client.repository';
+import { ClientNotFoundException } from '@domain/client/exceptions/client-not-found.exception';
 
 @Injectable()
 export class BankAccountImplService implements BankAccountService {
   constructor(
     @Inject('BankAccountRepository')
     private readonly accountRepository: BankAccountRepository,
+    @Inject('ClientRepository')
+    private readonly clientRepository: ClientRepository,
   ) {}
 
   async createAccount(account: BankAccountEntity): Promise<BankAccountEntity> {
+    const client = await this.clientRepository.findById(account.clientId);
+    if (!client) {
+      throw new ClientNotFoundException('Cliente não encontrado');
+    }
     return this.accountRepository.save(account);
   }
 
