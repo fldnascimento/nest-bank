@@ -75,7 +75,7 @@ export class BankAccountEntity extends Entity<BankAccountProps> {
   }
 
   public withdraw(amount: number) {
-    if (this.isActive && this.balance >= amount) {
+    if (this.balance >= amount) {
       this._props.balance -= amount;
       this.addTransaction(
         TransactionEntity.new({

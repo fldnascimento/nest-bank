@@ -54,6 +54,10 @@ export class BankAccountImplService implements BankAccountService {
       throw new AmountMustBePositiveException();
     }
 
+    if (!account.isActive) {
+      throw new BankAccountInactiveException();
+    }
+
     account.deposit(amount);
     await this.accountRepository.update(account);
 
