@@ -1,11 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientEntity } from '../entities/client.entity';
-import { ClientRepository } from '../repositories/client.repository';
+import { ClientRepository } from '../interfaces/repositories/client.repository';
 import { ClientNotFoundException } from '../exceptions/client-not-found.exception';
 import { ClientAlreadyExistsException } from '../exceptions/client-already-exists.exception';
+import { ClientService } from '../interfaces/services/client.service';
 
 @Injectable()
-export class ClientService {
+export class ClientImplService implements ClientService {
   constructor(
     @Inject('ClientRepository')
     private readonly clientRepository: ClientRepository,

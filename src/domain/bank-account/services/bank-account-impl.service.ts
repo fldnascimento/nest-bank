@@ -1,12 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { BankAccountEntity } from '../entities/bank-account.entity';
-import { BankAccountRepository } from '../repositories/bank-account.repository';
 import { BankAccountNotFoundException } from 'src/domain/bank-account/exceptions/bank-account-not-found.exception';
 import { AmountMustBePositiveException } from 'src/domain/bank-account/exceptions/amount-must-be-positive.exception';
 import { BalanceInsufficientException } from 'src/domain/bank-account/exceptions/balance-insufficient.exception';
+import { BankAccountRepository } from '../interfaces/repositories/bank-account.repository';
+import { BankAccountService } from '../interfaces/services/bank-account.service';
 
 @Injectable()
-export class BankAccountService {
+export class BankAccountImplService implements BankAccountService {
   constructor(
     @Inject('BankAccountRepository')
     private readonly accountRepository: BankAccountRepository,

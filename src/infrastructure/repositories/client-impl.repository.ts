@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ClientModel } from '../database/models/client.model';
 import { ClientMapper } from '../mappers/client.mapper';
-import { ClientRepository } from 'src/domain/client/repositories/client.repository';
+import { ClientRepository } from 'src/domain/client/interfaces/repositories/client.repository';
 import { ClientEntity } from 'src/domain/client/entities/client.entity';
 
 @Injectable()

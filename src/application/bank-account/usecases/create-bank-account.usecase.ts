@@ -1,11 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateBankAccountDto } from '../dto/create-bank-account.dto';
-import { BankAccountService } from 'src/domain/bank-account/services/bank-account.service';
 import { BankAccountEntity } from 'src/domain/bank-account/entities/bank-account.entity';
+import { BankAccountService } from 'src/domain/bank-account/interfaces/services/bank-account.service';
 
 @Injectable()
 export class CreateBankAccountUseCase {
-  constructor(private readonly bankAccountService: BankAccountService) {}
+  constructor(
+    @Inject('BankAccountService')
+    private readonly bankAccountService: BankAccountService,
+  ) {}
 
   async execute(
     bankAccountDto: CreateBankAccountDto,
