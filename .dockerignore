@@ -1,0 +1,7 @@
+coverage
+dist
+mysql_data
+node_modules
+test
+.git
+package-lock.json
