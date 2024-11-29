@@ -9,9 +9,10 @@ import { AmountMustBePositiveException } from '@domain/bank-account/exceptions/a
 import { BankAccountInactiveException } from '@domain/bank-account/exceptions/bank-account-inactive.exception';
 import { BalanceInsufficientException } from '@domain/bank-account/exceptions/balance-insufficient.exception';
 import { TransferToTheSameAccountException } from '@domain/bank-account/exceptions/transfer-to-the-same-account.exception';
+import { BankAccountService } from '@domain/bank-account/interfaces/services/bank-account.service';
 
 describe('BankAccountImplService', () => {
-  let service: BankAccountImplService;
+  let service: BankAccountService;
   let accountRepository: jest.Mocked<BankAccountRepository>;
   let clientRepository: jest.Mocked<ClientRepository>;
 
@@ -38,7 +39,7 @@ describe('BankAccountImplService', () => {
       ],
     }).compile();
 
-    service = module.get<BankAccountImplService>(BankAccountImplService);
+    service = module.get<BankAccountService>(BankAccountImplService);
     accountRepository = module.get('BankAccountRepository');
     clientRepository = module.get('ClientRepository');
   });

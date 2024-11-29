@@ -4,9 +4,10 @@ import { ClientRepository } from '@domain/client/interfaces/repositories/client.
 import { ClientEntity } from '@domain/client/entities/client.entity';
 import { ClientNotFoundException } from '@domain/client/exceptions/client-not-found.exception';
 import { ClientAlreadyExistsException } from '@domain/client/exceptions/client-already-exists.exception';
+import { ClientService } from '@domain/client/interfaces/services/client.service';
 
 describe('ClientImplService', () => {
-  let service: ClientImplService;
+  let service: ClientService;
   let clientRepository: jest.Mocked<ClientRepository>;
 
   beforeEach(async () => {
@@ -24,7 +25,7 @@ describe('ClientImplService', () => {
       ],
     }).compile();
 
-    service = module.get<ClientImplService>(ClientImplService);
+    service = module.get<ClientService>(ClientImplService);
     clientRepository = module.get('ClientRepository');
   });
 
