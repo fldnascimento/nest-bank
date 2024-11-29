@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { CreateBankAccountDto } from '@application/bank-account/dto/create-bank-account.dto';
 import { CreateBankAccountUseCase } from '@application/bank-account/usecases/create-bank-account.usecase';
 import { GetBankAccountUseCase } from '@application/bank-account/usecases/get-bank-account.usecase';
@@ -28,7 +28,7 @@ export class BankAccountController {
     return this.createBankAccountUseCase.execute(body);
   }
 
-  @Put()
+  @Patch()
   @UpdateBankAccountSwagger()
   updateBankAccount(@Body() body: UpdateBankAccountDto) {
     return this.updateBankAccountUseCase.execute(body);
