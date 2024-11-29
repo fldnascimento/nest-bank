@@ -77,4 +77,19 @@ describe('ClientEntity', () => {
     client.setFullName('  Felipe Lima  ');
     expect(client.fullName).toBe('Felipe Lima');
   });
+
+  it('should return the JSON of client', () => {
+    const client = ClientEntity.new({
+      fullName: 'Felipe Nascimento',
+      cpf: '123.456.789-09',
+      birthDate: new Date('2000-01-01'),
+    });
+
+    const json = client.toJSON();
+    expect(json.id).toBe(client.id);
+    expect(json.fullName).toBe(client.fullName);
+    expect(json.cpf).toBe(client.cpf);
+    expect(json.birthDate).toBe(client.birthDate);
+    expect(json.bankAccounts).toEqual([]);
+  });
 });
