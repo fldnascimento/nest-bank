@@ -14,12 +14,16 @@
 
 Este projeto é um backend desenvolvido em [NestJS](https://nestjs.com) que simula o funcionamento de um sistema bancário. Ele organiza e gerencia clientes, contas bancárias e transações financeiras. Foi construído aplicando os conceitos de Domain-Driven Design (DDD), SOLID e Clean Code.
 
-A arquetura foi modelada em comadas separando suas reponsábilidades.
+### Arquitetura
 
-- <b>Application:</b> Camada responsável por orquestrar o fluxo de informações entre a camada de apresentação e o domínio.
-- <b>Domain:</b> Está camada é o coração do sistema, onde reside toda a lógica de negócios, incluindo definições de contratos.
-- <b>Infrastructure:</b> Camada que realiza as implementações concretas para a persistência dos dados.
-- <b>Presentation:</b> Camada responsável por expor a aplicação para interação com o usuário.
+A arquitetura foi modelada em comadas separando suas reponsábilidades.
+
+- <b>`Application:`</b> Camada responsável por orquestrar o fluxo de informações entre a camada de apresentação e o domínio.
+- <b>`Domain:`</b> Está camada é o coração do sistema, onde reside toda a lógica de negócios, incluindo definições de contratos.
+- <b>`Infrastructure:`</b> Camada que realiza as implementações concretas para a persistência dos dados.
+- <b>`Presentation:`</b> Camada responsável por expor a aplicação para interação com o usuário.
+
+A camada `Domain` está com 100% de cobertura nos testes de unidade.
 
 ## Tecnologias
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
@@ -31,6 +35,49 @@ A arquetura foi modelada em comadas separando suas reponsábilidades.
 ![Jest](https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white)
 
 ## Instalação
+
+### 🐳 Docker
+
+```bash
+# clone o projeto
+git clone https://github.com/fldnascimento/nest-bank
+
+# entre na pasta do projeto
+cd nest-bank
+
+# crie o arquivo .env na raiz do projeto
+cp .env.example .env
+
+# execute o projeto
+docker compose up
+````
+
+### 💪🏻 Sem-Docker
+
+Requisitos:
+- **Node.js**: Certifique-se de ter a versão **18.x** ou superior instalada para garantir a compatibilidade com as dependências.
+- **MySQL**: O projeto utiliza o MySQL como banco de dados. Certifique-se de que um servidor MySQL8.4 esteja instalado e em execução.
+
+```bash
+# clone o projeto
+git clone https://github.com/fldnascimento/nest-bank
+
+# entre na pasta do projeto
+cd nest-bank
+
+# instale as dependências do projeto
+npm install
+
+# garanta que o banco de dados esteja disponível
+# crie o banco de dados
+npm run db:create
+
+# execute as migrations
+npm run db:migrate
+
+# execute o projeto
+npm run start:dev
+```
 
 <h2 id="routes">📍 Instruções de uso</h2>
 
