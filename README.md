@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://i.ibb.co/g9tDB72/Nest-bank123.png" width="220" alt="Nest Bank Logo" />
+  <img src="https://i.ibb.co/Khrb6WJ/Nest-bank.png" width="220" alt="Nest Bank Logo" />
 </p>
 
   <p align="center">
