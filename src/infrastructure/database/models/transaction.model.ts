@@ -23,7 +23,13 @@ export class TransactionModel extends Model {
   })
   type!: TransactionType;
 
-  @Column({ allowNull: false, type: DataType.DECIMAL(10, 2) })
+  @Column({
+    allowNull: false,
+    type: DataType.DECIMAL(10, 2),
+    get() {
+      return parseFloat(this.getDataValue('amount'));
+    },
+  })
   amount!: number;
 
   @Column({ allowNull: false, type: DataType.DATE })

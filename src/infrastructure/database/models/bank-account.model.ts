@@ -25,7 +25,14 @@ export class BankAccountModel extends Model {
   })
   accountNumber!: string;
 
-  @Column({ allowNull: false, type: DataType.DECIMAL(10, 2), defaultValue: 0 })
+  @Column({
+    allowNull: false,
+    type: DataType.DECIMAL(10, 2),
+    defaultValue: 0,
+    get() {
+      return parseFloat(this.getDataValue('balance'));
+    },
+  })
   balance!: number;
 
   @Column({ allowNull: false, type: DataType.BOOLEAN, defaultValue: true })
