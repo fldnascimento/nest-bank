@@ -58,6 +58,7 @@ cp .env.example .env
 # execute o projeto
 docker compose up
 ```
+O projeto será executado  em http://localhost:3003/api/
 
 ### 💪🏻 Sem-Docker
 
@@ -76,6 +77,9 @@ cd nest-bank
 # instale as dependências do projeto
 npm install
 
+# crie o arquivo .env na raiz do projeto
+cp .env.example .env
+
 # garanta que o banco de dados esteja disponível
 # crie o banco de dados
 npm run db:create
@@ -86,6 +90,7 @@ npm run db:migrate
 # execute o projeto
 npm run start:dev
 ```
+O projeto será executado  em http://localhost:3003/api/
 
 <h2 id="routes">📍 Instruções de uso</h2>
 
