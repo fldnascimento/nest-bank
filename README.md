@@ -31,6 +31,12 @@ A arquitetura foi modelada em camadas, separando suas responsabilidades.
 
 A camada `Domain` está com 100% de cobertura nos testes de unidade.
 
+### Documentação
+
+O projeto foi documentado usando o swagger. A documentação está disponível em http://localhost:3003/api
+
+Todos os endpoints estão com exemplos de `request` e exemplo de `response`.
+
 <h2 id="tech">💻 Tecnologias</h2>
 
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
