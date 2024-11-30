@@ -54,7 +54,6 @@ export class BankAccountImplRepository implements BankAccountRepository {
       where: {
         accountNumber,
       },
-      include: ['transactions'],
     });
 
     if (!account) {

@@ -3,6 +3,7 @@ import { InvalidCpfException } from '@domain/client/exceptions/invalid-cpf.excep
 import { BankAccountEntity } from '@domain/bank-account/entities/bank-account.entity';
 import { InvalidFullNameException } from '@domain/client/exceptions/invalid-full-name.exception';
 import { InvalidBirthDateException } from '@domain/client/exceptions/invalid-birth-date.exception';
+import { BirthDateValueObject } from '@domain/client/value-objects/birth-date.value-object';
 
 describe('ClientEntity', () => {
   it('should create a new client with valid properties', () => {
@@ -82,14 +83,14 @@ describe('ClientEntity', () => {
     const client = ClientEntity.new({
       fullName: 'Felipe Nascimento',
       cpf: '123.456.789-09',
-      birthDate: new Date('2000-01-01'),
+      birthDate: new BirthDateValueObject('2000-01-01'),
     });
 
     const json = client.toJSON();
     expect(json.id).toBe(client.id);
     expect(json.fullName).toBe(client.fullName);
     expect(json.cpf).toBe(client.cpf);
-    expect(json.birthDate).toBe(client.birthDate);
+    expect(json.birthDate.toJSON()).toBe('2000-01-01');
     expect(json.bankAccounts).toEqual([]);
   });
 });

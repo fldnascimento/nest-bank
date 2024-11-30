@@ -147,13 +147,15 @@ describe('BankAccountImplService', () => {
         isActive: true,
       });
 
-      accountRepository.findByAccountNumber.mockResolvedValue(account);
+      accountRepository.findByAccountNumberWithDestinactionAccount.mockResolvedValue(
+        account,
+      );
 
       const result = await service.deposit('12345', 50);
 
-      expect(accountRepository.findByAccountNumber).toHaveBeenCalledWith(
-        '12345',
-      );
+      expect(
+        accountRepository.findByAccountNumberWithDestinactionAccount,
+      ).toHaveBeenCalledWith('12345');
       expect(accountRepository.update).toHaveBeenCalledWith(account);
       expect(result.balance).toBe(150);
     });
@@ -178,10 +180,22 @@ describe('BankAccountImplService', () => {
         isActive: false,
       });
 
-      accountRepository.findByAccountNumber.mockResolvedValue(account);
+      accountRepository.findByAccountNumberWithDestinactionAccount.mockResolvedValue(
+        account,
+      );
 
       await expect(service.deposit('12345', 50)).rejects.toThrow(
         BankAccountInactiveException,
+      );
+    });
+
+    it('should throw BankAccountNotFoundException if account does not exist', async () => {
+      accountRepository.findByAccountNumberWithDestinactionAccount.mockResolvedValue(
+        null,
+      );
+
+      await expect(service.deposit('12345', 50)).rejects.toThrow(
+        BankAccountNotFoundException,
       );
     });
   });
@@ -194,13 +208,15 @@ describe('BankAccountImplService', () => {
         isActive: true,
       });
 
-      accountRepository.findByAccountNumber.mockResolvedValue(account);
+      accountRepository.findByAccountNumberWithDestinactionAccount.mockResolvedValue(
+        account,
+      );
 
       const result = await service.withdraw('12345', 50);
 
-      expect(accountRepository.findByAccountNumber).toHaveBeenCalledWith(
-        '12345',
-      );
+      expect(
+        accountRepository.findByAccountNumberWithDestinactionAccount,
+      ).toHaveBeenCalledWith('12345');
       expect(accountRepository.update).toHaveBeenCalledWith(account);
       expect(result.balance).toBe(50);
     });
@@ -212,7 +228,9 @@ describe('BankAccountImplService', () => {
         isActive: false,
       });
 
-      accountRepository.findByAccountNumber.mockResolvedValue(account);
+      accountRepository.findByAccountNumberWithDestinactionAccount.mockResolvedValue(
+        account,
+      );
       await expect(
         service.withdraw(account.accountNumber, -50),
       ).rejects.toThrow(AmountMustBePositiveException);
@@ -225,10 +243,38 @@ describe('BankAccountImplService', () => {
         isActive: true,
       });
 
-      accountRepository.findByAccountNumber.mockResolvedValue(account);
+      accountRepository.findByAccountNumberWithDestinactionAccount.mockResolvedValue(
+        account,
+      );
 
       await expect(service.withdraw('12345', 100)).rejects.toThrow(
         BalanceInsufficientException,
+      );
+    });
+
+    it('should throw BankAccountInactiveException if account is inactive', async () => {
+      const account = BankAccountEntity.new({
+        balance: 100,
+        clientId: 'client-id',
+        isActive: false,
+      });
+
+      accountRepository.findByAccountNumberWithDestinactionAccount.mockResolvedValue(
+        account,
+      );
+
+      await expect(service.withdraw('12345', 50)).rejects.toThrow(
+        BankAccountInactiveException,
+      );
+    });
+
+    it('should throw BankAccountNotFoundException if account does not exist', async () => {
+      accountRepository.findByAccountNumberWithDestinactionAccount.mockResolvedValue(
+        null,
+      );
+
+      await expect(service.withdraw('12345', 50)).rejects.toThrow(
+        BankAccountNotFoundException,
       );
     });
   });

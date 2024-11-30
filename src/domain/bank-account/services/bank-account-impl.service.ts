@@ -48,10 +48,17 @@ export class BankAccountImplService implements BankAccountService {
     accountNumber: string,
     amount: number,
   ): Promise<BankAccountEntity> {
-    const account = await this.getAccountByNumber(accountNumber);
-
     if (amount < 0) {
       throw new AmountMustBePositiveException();
+    }
+
+    const account =
+      await this.accountRepository.findByAccountNumberWithDestinactionAccount(
+        accountNumber,
+      );
+
+    if (!account) {
+      throw new BankAccountNotFoundException();
     }
 
     if (!account.isActive) {
@@ -68,9 +75,21 @@ export class BankAccountImplService implements BankAccountService {
     accountNumber: string,
     amount: number,
   ): Promise<BankAccountEntity> {
-    const account = await this.getAccountByNumber(accountNumber);
     if (amount < 0) {
       throw new AmountMustBePositiveException();
+    }
+
+    const account =
+      await this.accountRepository.findByAccountNumberWithDestinactionAccount(
+        accountNumber,
+      );
+
+    if (!account) {
+      throw new BankAccountNotFoundException();
+    }
+
+    if (!account.isActive) {
+      throw new BankAccountInactiveException();
     }
 
     if (account.balance < amount) {
