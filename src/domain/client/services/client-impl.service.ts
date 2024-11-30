@@ -5,6 +5,7 @@ import { ClientRepository } from '@domain/client/interfaces/repositories/client.
 import { ClientNotFoundException } from '@domain/client/exceptions/client-not-found.exception';
 import { ClientAlreadyExistsException } from '@domain/client/exceptions/client-already-exists.exception';
 import { ClientService } from '@domain/client/interfaces/services/client.service';
+import { BirthDateValueObject } from '@domain/client/value-objects/birth-date.value-object';
 
 @Injectable()
 export class ClientImplService implements ClientService {
@@ -21,6 +22,7 @@ export class ClientImplService implements ClientService {
     const passwordHash = await bcrypt.hash(client.password, 10);
     client.setPassword(passwordHash);
     const newClient = await this.clientRepository.save(client);
+    newClient.setBirthDate(new BirthDateValueObject(newClient.birthDate));
     newClient.setPassword(undefined);
     return newClient;
   }

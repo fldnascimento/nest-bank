@@ -4,11 +4,12 @@ import { BankAccountEntity } from '@domain/bank-account/entities/bank-account.en
 import { InvalidCpfException } from '@domain/client/exceptions/invalid-cpf.exception';
 import { InvalidFullNameException } from '@domain/client/exceptions/invalid-full-name.exception';
 import { InvalidBirthDateException } from '@domain/client/exceptions/invalid-birth-date.exception';
+import { BirthDateValueObject } from '@domain/client/value-objects/birth-date.value-object';
 
 export type ClientProps = {
   fullName: string;
   cpf: string;
-  birthDate: Date;
+  birthDate: BirthDateValueObject;
   password?: string;
   bankAccounts?: BankAccountEntity[];
 };
@@ -68,7 +69,7 @@ export class ClientEntity extends Entity<ClientProps> {
     this._props.cpf = cpf;
   }
 
-  setBirthDate(birthDate: Date): void {
+  setBirthDate(birthDate: BirthDateValueObject): void {
     const now = new Date();
     if (birthDate > now) {
       throw new InvalidBirthDateException();
