@@ -17,7 +17,7 @@ export function GetClientSwagger() {
       example: {
         id: '2ce8474b-20ba-4383-af39-2285182cbc97',
         fullName: 'Name test 123',
-        cpf: '39700900835',
+        cpf: '12345678901',
         birthDate: '1994-10-13',
         bankAccounts: [],
       },
