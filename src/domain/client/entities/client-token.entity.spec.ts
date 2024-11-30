@@ -38,15 +38,4 @@ describe('ClientTokenEntity', () => {
 
     expect(clientTokenEntity.token).toBe('newToken');
   });
-
-  //   it('should throw an error if token is not provided', () => {
-  //     const props = {
-  //       fullName: 'Felipe Nascimento',
-  //       birthDate: new Date('2000-01-01'),
-  //       //   cpf: '12345678909',
-  //       //   password: '123456',
-  //     };
-
-  //     expect(() => new ClientTokenEntity(props as any)).toThrow();
-  //   });
 });
