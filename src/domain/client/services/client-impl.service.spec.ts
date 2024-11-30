@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ClientImplService } from './client-impl.service';
+import { ClientImplService } from '@domain/client/services/client-impl.service';
 import { ClientRepository } from '@domain/client/interfaces/repositories/client.repository';
 import { ClientEntity } from '@domain/client/entities/client.entity';
 import { ClientNotFoundException } from '@domain/client/exceptions/client-not-found.exception';
@@ -35,6 +35,7 @@ describe('ClientImplService', () => {
         fullName: 'Felipe Nascimento',
         cpf: '96599723004',
         birthDate: new Date('2000-01-01'),
+        password: '123456',
       });
 
       clientRepository.findByCpf.mockResolvedValue(null);

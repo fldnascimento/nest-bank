@@ -1,4 +1,4 @@
-import { Entity } from './entity';
+import { Entity } from '@domain/common/domain/entity';
 
 export interface Repo<T extends Entity<any>> {
   save(entity: T): Promise<T>;

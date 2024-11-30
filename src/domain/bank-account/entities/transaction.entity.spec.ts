@@ -1,5 +1,8 @@
-import { TransactionEntity, transactionsTypes } from './transaction.entity';
-import { BankAccountEntity } from './bank-account.entity';
+import {
+  TransactionEntity,
+  transactionsTypes,
+} from '@domain/bank-account/entities/transaction.entity';
+import { BankAccountEntity } from '@domain/bank-account/entities/bank-account.entity';
 
 describe('TransactionEntity', () => {
   it('should create a new transaction with required properties', () => {

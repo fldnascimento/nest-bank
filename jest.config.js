@@ -18,5 +18,9 @@ module.exports = {
     'domain/**/*.{ts,js}',
     '!domain/**/*.spec.{ts,js}',
     '!domain/**/index.{ts,js}',
+    '!**/service.{ts,js}',
+    '!domain/**/*.decorator.{ts,js}',
+    '!domain/**/*.guard.{ts,js}',
+    '!domain/**/*.strategy.{ts,js}',
   ],
 };

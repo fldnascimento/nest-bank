@@ -23,6 +23,7 @@ export class ClientMapper implements Mapper<ClientEntity, ClientModel> {
       cpf: entity.cpf,
       birthDate: entity.birthDate,
       accounts: accounts,
+      password: entity.password,
     });
 
     return client;
@@ -35,6 +36,7 @@ export class ClientMapper implements Mapper<ClientEntity, ClientModel> {
         cpf: clientModel.cpf,
         birthDate: clientModel.birthDate,
         bankAccounts: [],
+        password: clientModel.password,
       },
       clientModel.id,
     );

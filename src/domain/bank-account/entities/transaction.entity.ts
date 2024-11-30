@@ -1,5 +1,5 @@
 import { Entity } from '@domain/common/domain/entity';
-import { BankAccountEntity } from './bank-account.entity';
+import { BankAccountEntity } from '@domain/bank-account/entities/bank-account.entity';
 
 export const transactionsTypes = ['CREDIT', 'DEBIT', 'TRANSFER'] as const;
 export type TransactionType = (typeof transactionsTypes)[number];

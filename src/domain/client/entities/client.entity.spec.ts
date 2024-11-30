@@ -1,4 +1,4 @@
-import { ClientEntity } from './client.entity';
+import { ClientEntity } from '@domain/client/entities/client.entity';
 import { InvalidCpfException } from '@domain/client/exceptions/invalid-cpf.exception';
 import { BankAccountEntity } from '@domain/bank-account/entities/bank-account.entity';
 import { InvalidFullNameException } from '@domain/client/exceptions/invalid-full-name.exception';

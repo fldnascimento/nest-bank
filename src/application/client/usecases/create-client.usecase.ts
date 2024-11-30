@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientEntity } from '@domain/client/entities/client.entity';
 import { ClientService } from '@domain/client/interfaces/services/client.service';
 import { UseCase } from '@domain/common/application/usecase';
-import { CreateClientDto } from '../dto/create-client.dto';
+import { CreateClientDto } from '@application/client/dto/create-client.dto';
 
 @Injectable()
 export class CreateClientUseCase

@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import { ClientEntity } from '@domain/client/entities/client.entity';
 import { ClientRepository } from '@domain/client/interfaces/repositories/client.repository';
 import { ClientNotFoundException } from '@domain/client/exceptions/client-not-found.exception';
@@ -17,7 +18,11 @@ export class ClientImplService implements ClientService {
     if (clientExists) {
       throw new ClientAlreadyExistsException();
     }
-    return await this.clientRepository.save(client);
+    const passwordHash = await bcrypt.hash(client.password, 10);
+    client.setPassword(passwordHash);
+    const newClient = await this.clientRepository.save(client);
+    newClient.setPassword(undefined);
+    return newClient;
   }
 
   async getClient(id: string): Promise<ClientEntity> {

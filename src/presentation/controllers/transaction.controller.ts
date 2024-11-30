@@ -8,8 +8,11 @@ import { TransferDto } from '@application/bank-account/dto/transfer.dto';
 import { DepositSwagger } from '@presentation/swagger/transaction/deposit.swagger';
 import { WithdrawSwagger } from '@presentation/swagger/transaction/withdraw.swagger';
 import { TransferSwagger } from '@presentation/swagger/transaction/transfer.swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-@Controller('transaction')
+@ApiBearerAuth()
+@ApiTags('Transaction')
+@Controller({ path: 'transaction', version: '1' })
 export class TransactionController {
   constructor(
     private readonly depositUseCase: DepositUseCase,

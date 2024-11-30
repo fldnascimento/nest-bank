@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import appplication from '@application/index';
-import domain from '@domain/index';
+import domain, { modules } from '@domain/index';
 import infrastructure, { models } from '@infrastructure/index';
 import presentation from '@presentation/index';
 
@@ -21,6 +21,7 @@ import presentation from '@presentation/index';
       synchronize: false,
       models: models,
     }),
+    ...modules(process.env.JWT_SECRET),
   ],
   controllers: presentation,
   providers: [...domain, ...infrastructure, ...appplication],

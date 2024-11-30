@@ -1,5 +1,5 @@
 import { Model, Table, Column, DataType, HasMany } from 'sequelize-typescript';
-import { BankAccountModel } from './bank-account.model';
+import { BankAccountModel } from '@infrastructure/database/models/bank-account.model';
 
 @Table({ tableName: 'clients', timestamps: false, underscored: true })
 export class ClientModel extends Model {
@@ -14,6 +14,9 @@ export class ClientModel extends Model {
 
   @Column({ allowNull: false, type: DataType.DATE })
   birthDate!: Date;
+
+  @Column({ allowNull: false, type: DataType.STRING })
+  password!: string;
 
   @HasMany(() => BankAccountModel)
   accounts!: BankAccountModel[];

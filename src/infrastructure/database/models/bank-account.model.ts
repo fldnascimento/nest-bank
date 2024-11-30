@@ -7,8 +7,8 @@ import {
   BelongsTo,
   HasMany,
 } from 'sequelize-typescript';
-import { ClientModel } from './client.model';
-import { TransactionModel } from './transaction.model';
+import { ClientModel } from '@infrastructure/database/models/client.model';
+import { TransactionModel } from '@infrastructure/database/models/transaction.model';
 
 @Table({ tableName: 'bank_accounts', timestamps: false, underscored: true })
 export class BankAccountModel extends Model {

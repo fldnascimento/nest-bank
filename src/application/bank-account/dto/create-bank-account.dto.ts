@@ -1,11 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsBoolean,
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional } from 'class-validator';
 
 export class CreateBankAccountDto {
   @IsNumber()
@@ -25,12 +19,4 @@ export class CreateBankAccountDto {
     example: true,
   })
   isActive: boolean;
-
-  @IsString({ message: 'O ID do cliente é do tipo string' })
-  @IsNotEmpty({ message: 'O ID do cliente é obrigatório' })
-  @ApiProperty({
-    type: 'string',
-    description: 'ID do cliente',
-  })
-  clientId: string;
 }

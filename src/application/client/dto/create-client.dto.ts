@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import {
   IsDateString,
   IsNotEmpty,
@@ -31,6 +32,7 @@ export class CreateClientDto {
   @MaxLength(14, {
     message: 'O CPF deve ter no máximo 14 caracteres com pontuação',
   })
+  @Transform(({ value }) => value.replace(/[^0-9]/g, ''))
   cpf: string;
 
   @IsDateString(
@@ -44,4 +46,14 @@ export class CreateClientDto {
     example: '1990-01-01',
   })
   birthDate: Date;
+
+  @IsString({ message: 'A senha é do tipo string' })
+  @IsNotEmpty({ message: 'A senha é obrigatória' })
+  @MinLength(6, { message: 'A senha deve ter no mínimo 6 caracteres' })
+  @ApiProperty({
+    type: 'string',
+    description: 'Senha',
+    example: '123456',
+  })
+  password: string;
 }

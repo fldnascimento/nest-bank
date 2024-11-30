@@ -6,7 +6,7 @@ import {
   ForeignKey,
   BelongsTo,
 } from 'sequelize-typescript';
-import { BankAccountModel } from './bank-account.model';
+import { BankAccountModel } from '@infrastructure/database/models/bank-account.model';
 import {
   transactionsTypes,
   TransactionType,

@@ -1,5 +1,6 @@
 import { applyDecorators } from '@nestjs/common';
 import {
+  ApiBearerAuth,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -7,6 +8,7 @@ import {
 
 export function GetClientSwagger() {
   return applyDecorators(
+    ApiBearerAuth(),
     ApiOperation({
       summary: 'Consulta cliente por ID',
     }),

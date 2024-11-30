@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { BankAccountImplService } from './bank-account-impl.service';
+import { BankAccountImplService } from '@domain/bank-account/services/bank-account-impl.service';
 import { BankAccountRepository } from '@domain/bank-account/interfaces/repositories/bank-account.repository';
 import { ClientRepository } from '@domain/client/interfaces/repositories/client.repository';
 import { BankAccountEntity } from '@domain/bank-account/entities/bank-account.entity';

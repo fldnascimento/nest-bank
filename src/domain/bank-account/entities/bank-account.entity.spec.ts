@@ -1,5 +1,5 @@
-import { BankAccountEntity } from './bank-account.entity';
-import { TransactionEntity } from './transaction.entity';
+import { BankAccountEntity } from '@domain/bank-account/entities/bank-account.entity';
+import { TransactionEntity } from '@domain/bank-account/entities/transaction.entity';
 
 describe('BankAccountEntity', () => {
   it('should create a new bank account with default properties', () => {
@@ -155,5 +155,18 @@ describe('BankAccountEntity', () => {
 
     expect(bankAccount.balance).toBe(100);
     expect(bankAccount.transactions).toHaveLength(0);
+  });
+
+  it('should return the JSON of bank account', () => {
+    const bankAccount = BankAccountEntity.new({
+      balance: 100,
+      clientId: 'client-id',
+      isActive: true,
+    });
+
+    const json = bankAccount.toJSON();
+    expect(json.balance).toBe(bankAccount.balance);
+    expect(json.clientId).toBe(bankAccount.clientId);
+    expect(json.isActive).toBe(bankAccount.isActive);
   });
 });

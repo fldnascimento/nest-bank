@@ -1,6 +1,6 @@
-import { Entity } from '@domain/common/domain/entity';
-import { TransactionEntity } from './transaction.entity';
 import { randomUUID } from 'node:crypto';
+import { Entity } from '@domain/common/domain/entity';
+import { TransactionEntity } from '@domain/bank-account/entities/transaction.entity';
 
 type BankAccountProps = {
   accountNumber: string;

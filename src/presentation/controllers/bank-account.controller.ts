@@ -7,8 +7,13 @@ import { UpdateBankAccountUseCase } from '@application/bank-account/usecases/upd
 import { CreateBankAccountSwagger } from '@presentation/swagger/bank-account/create-bank-account.swagger';
 import { GetBankAccountSwagger } from '@presentation/swagger/bank-account/get-bank-account.swagger';
 import { UpdateBankAccountSwagger } from '@presentation/swagger/bank-account/update-bank-account.swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { CurrentClient } from '@domain/common/auth/decorators/current-client.decorator';
+import { ClientEntity } from '@domain/client/entities/client.entity';
 
-@Controller('bank-account')
+@ApiBearerAuth()
+@ApiTags('Bank Account')
+@Controller({ path: 'bank-account', version: '1' })
 export class BankAccountController {
   constructor(
     private readonly createBankAccountUseCase: CreateBankAccountUseCase,
@@ -24,8 +29,11 @@ export class BankAccountController {
 
   @Post()
   @CreateBankAccountSwagger()
-  createBankAccount(@Body() body: CreateBankAccountDto) {
-    return this.createBankAccountUseCase.execute(body);
+  createBankAccount(
+    @Body() body: CreateBankAccountDto,
+    @CurrentClient() client: ClientEntity,
+  ) {
+    return this.createBankAccountUseCase.execute(body, client.id);
   }
 
   @Patch()

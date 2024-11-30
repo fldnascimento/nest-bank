@@ -5,10 +5,11 @@ import { InvalidCpfException } from '@domain/client/exceptions/invalid-cpf.excep
 import { InvalidFullNameException } from '@domain/client/exceptions/invalid-full-name.exception';
 import { InvalidBirthDateException } from '@domain/client/exceptions/invalid-birth-date.exception';
 
-type ClientProps = {
+export type ClientProps = {
   fullName: string;
   cpf: string;
   birthDate: Date;
+  password?: string;
   bankAccounts?: BankAccountEntity[];
 };
 
@@ -42,6 +43,14 @@ export class ClientEntity extends Entity<ClientProps> {
 
   get accounts(): BankAccountEntity[] {
     return this._props.bankAccounts;
+  }
+
+  get password(): string {
+    return this._props.password;
+  }
+
+  setPassword(password: string) {
+    this._props.password = password;
   }
 
   setFullName(fullName: string): void {
@@ -89,5 +98,13 @@ export class ClientEntity extends Entity<ClientProps> {
       getVerifyingDigit(digits.slice(0, 9)) === digits[9] &&
       getVerifyingDigit(digits.slice(0, 10)) === digits[10]
     );
+  }
+
+  toJSON() {
+    return {
+      id: this._id,
+      ...this._props,
+      password: undefined,
+    };
   }
 }
