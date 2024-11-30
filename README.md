@@ -6,8 +6,7 @@
 <b>Sistema bancário em NestJS com DDD, SOLID e Clean Code, focado no domínio do problema 💰</b>
 </p>
 <img src="https://img.shields.io/badge/coverage-100%25-green" alt="Coverage" />
-<img src="https://img.shields.io/github/license/fldnascimento/nest-bank
-" alt="License" />
+<img src="https://img.shields.io/github/license/fldnascimento/nest-bank" alt="License" />
 
 <p align="center">
  <a href="#description">Descrição</a> • 
