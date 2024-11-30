@@ -94,6 +94,8 @@ O projeto será executado  em http://localhost:3003/api/
 
 <h2 id="routes">📍 Instruções de uso</h2>
 
+Para criar um novo cliente é necessário um CPF válido. </br> Use esse site para gerar um CPF: 👉🏽 <a href="https://www.4devs.com.br/gerador_de_cpf" target="_blank">Gerar CPF</a>
+
 | rota | descrição  
 |----------------------|-----------------------------------------------------
 | <kbd>GET /client/:id</kbd> | consulta cliente por id veja os [detalhes do response](#get-client)
