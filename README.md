@@ -9,8 +9,14 @@
 <img src="https://img.shields.io/github/license/fldnascimento/nest-bank
 " alt="License" />
 
+<p align="center">
+ <a href="#description">Descrição</a> • 
+ <a href="#tech">Tecnologias</a> • 
+  <a href="#setup">Instalação</a> • 
+  <a href="#routes">Instruções de uso</a>
+</p>
 
-## Descrição
+<h2 id="description"> 🗒️ Descrição</h2>
 
 Este projeto é um backend desenvolvido em [NestJS](https://nestjs.com) que simula o funcionamento de um sistema bancário. Ele organiza e gerencia clientes, contas bancárias e transações financeiras. Foi construído aplicando os conceitos de Domain-Driven Design (DDD), SOLID e Clean Code.
 
@@ -25,7 +31,8 @@ A arquitetura foi modelada em comadas separando suas reponsábilidades.
 
 A camada `Domain` está com 100% de cobertura nos testes de unidade.
 
-## Tecnologias
+<h2 id="tech">💻 Tecnologias</h2>
+
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white)
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
@@ -34,7 +41,7 @@ A camada `Domain` está com 100% de cobertura nos testes de unidade.
 ![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white)
 ![Jest](https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white)
 
-## Instalação
+<h2 id="setup">🔧 Instalação</h2>
 
 ### 🐳 Docker
 
@@ -50,11 +57,12 @@ cp .env.example .env
 
 # execute o projeto
 docker compose up
-````
+```
 
 ### 💪🏻 Sem-Docker
 
 Requisitos:
+
 - **Node.js**: Certifique-se de ter a versão **18.x** ou superior instalada para garantir a compatibilidade com as dependências.
 - **MySQL**: O projeto utiliza o MySQL como banco de dados. Certifique-se de que um servidor MySQL8.4 esteja instalado e em execução.
 
@@ -81,28 +89,44 @@ npm run start:dev
 
 <h2 id="routes">📍 Instruções de uso</h2>
 
-​
-| route               | description                                          
+| rota | descrição  
 |----------------------|-----------------------------------------------------
-| <kbd>GET /client/:id</kbd>     | consulta cliente por id veja os [detalhes do response](#get-client)
-| <kbd>POST /client</kbd>     | cria um novo cliente veja os [detalhes do request](#create-client)
+| <kbd>GET /client/:id</kbd> | consulta cliente por id veja os [detalhes do response](#get-client)
+| <kbd>POST /client</kbd> | cria um novo cliente veja os [detalhes do request](#create-client)
+| <kbd>POST /client/login</kbd> | login do cliente veja os [detalhes do request](#login-client)
+| <kbd>GET /bank-account/:id</kbd> | consulta conta por id veja os [detalhes do response](#get-account)
+| <kbd>POST /bank-account</kbd> | cria uma nova conta veja os [detalhes do request](#create-account)
+| <kbd>PATCH /bank-account</kbd> | atualiza status da conta veja os [detalhes do request](#update-account)
+| <kbd>POST /transaction/deposit</kbd> | realiza um depósito em uma conta veja os [detalhes do request](#deposit)
+| <kbd>POST /transaction/withdraw</kbd> | realiza um saque em uma conta veja os [detalhes do request](#withdraw)
+| <kbd>POST /transaction/transfer</kbd> | realiza uma transferência entre contas veja os [detalhes do request](#transfer)
 
 <h3 id="get-client">GET /client/:id</h3>
 
 **RESPONSE**
+
 ```json
 {
-  "id": "2ce8474b-20ba-4383-af39-2285182cbc97",
+  "id": "776f802b-6393-475c-aaac-32175f200f65",
   "fullName": "Felipe Nascimento",
   "cpf": "12345678901",
   "birthDate": "1991-01-01",
-  "bankAccounts": []
+  "bankAccounts": [
+    {
+      "id": "8190336d-a44c-474d-a056-33c822b575bb",
+      "accountNumber": "0c6d46ee",
+      "clientId": "776f802b-6393-475c-aaac-32175f200f65",
+      "balance": 1000,
+      "isActive": true
+    }
+  ]
 }
 ```
 
 <h3 id="create-client">POST /client</h3>
 
-**RESPONSE**
+**REQUEST**
+
 ```json
 {
   "fullName": "Felipe Nascimento",
@@ -111,7 +135,203 @@ npm run start:dev
   "password": "123456"
 }
 ```
-##
+
+**RESPONSE**
+
+```json
+{
+  "id": "8656c567-2acd-4b07-bf25-5fa9bf43f929",
+  "fullName": "Felipe Nascimento",
+  "cpf": "00000000000",
+  "birthDate": "1990-01-01",
+  "bankAccounts": []
+}
+```
+
+<h3 id="login-client">POST /client/login</h3>
+
+**REQUEST**
+
+```json
+{
+  "cpf": "12345678901",
+  "password": "123456"
+}
+```
+
+**RESPONSE**
+
+```json
+{
+  "id": "776f802b-6393-475c-aaac-32175f200f65",
+  "cpf": "12345678901",
+  "fullName": "Felipe Nascimento",
+  "token": "eyJhbGciOiJIU....",
+  "birthDate": "1990-01-01"
+}
+```
+
+<h3 id="get-account">GET /bank-account/:id</h3>
+
+**RESPONSE**
+
+```json
+{
+  "id": "8190336d-a44c-474d-a056-33c822b575bb",
+  "accountNumber": "0c6d46ee",
+  "clientId": "776f802b-6393-475c-aaac-32175f200f65",
+  "balance": 1500,
+  "isActive": true,
+  "transactions": [
+    {
+      "id": "97526696-06e1-45df-84b6-f564fe383160",
+      "type": "DEBIT",
+      "amount": 10,
+      "date": "2024-11-28T20:41:59.000Z"
+    },
+    {
+      "id": "6c5014c2-ceec-483f-829b-585e01fc404c",
+      "type": "CREDIT",
+      "amount": 24.5,
+      "date": "2024-11-28T20:41:59.000Z"
+    }
+  ]
+}
+```
+
+<h3 id="create-account">POST /bank-account</h3>
+
+**REQUEST**
+
+```json
+{
+  "balance": 10,
+  "isActive": true
+}
+```
+
+**RESPONSE**
+
+```json
+{
+  "id": "8190336d-a44c-474d-a056-33c822b575bb",
+  "accountNumber": "0c6d46ee",
+  "balance": 10,
+  "isActive": true,
+  "clientId": "776f802b-6393-475c-aaac-32175f200f65"
+}
+```
+<h3 id="update-account">PATCH /bank-account</h3>
+
+**REQUEST**
+
+```json
+{
+  "isActive": false,
+  "accountNumber": "0c6d46ee"
+}
+```
+
+**RESPONSE**
+
+```json
+{
+  "id": "8190336d-a44c-474d-a056-33c822b575bb",
+  "accountNumber": "0c6d46ee",
+  "balance": 10,
+  "isActive": false,
+  "clientId": "776f802b-6393-475c-aaac-32175f200f65"
+}
+```
+<h3 id="deposit">POST /transaction/deposit</h3>
+
+**REQUEST**
+
+```json
+{
+  "amount": 10,
+  "accountNumber": "9e4b9383"
+}
+```
+
+**RESPONSE**
+
+```json
+{
+  "id": "4824579b-716a-49b5-8c64-98b97b1ac94b",
+  "accountNumber": "9e4b9383",
+  "clientId": "6c5014c2-ceec-483f-829b-585e01fc404c",
+  "balance": 10,
+  "isActive": true,
+  "transactions": [
+    {
+      "type": "CREDIT",
+      "amount": 10,
+      "date": "2024-11-28T22:24:54.571Z"
+    }
+  ]
+}
+```
+<h3 id="withdraw">POST /transaction/withdraw</h3>
+
+**REQUEST**
+
+```json
+{
+  "amount": 10,
+  "accountNumber": "9e4b9383"
+}
+```
+
+**RESPONSE**
+
+```json
+{
+  "id": "4824579b-716a-49b5-8c64-98b97b1ac94b",
+  "accountNumber": "9e4b9383",
+  "clientId": "6c5014c2-ceec-483f-829b-585e01fc404c",
+  "balance": 10,
+  "isActive": true,
+  "transactions": [
+    {
+      "type": "DEBIT",
+      "amount": 10,
+      "date": "2024-11-28T22:27:51.481Z"
+    }
+  ]
+}
+```
+<h3 id="transfer">POST /transaction/transfer</h3>
+
+**REQUEST**
+
+```json
+{
+  "amount": 10,
+  "toAccountNumber": "8a5a71a7",
+  "fromAccountNumber": "9e4b9383",
+}
+```
+
+**RESPONSE**
+
+```json
+{
+  "id": "4824579b-716a-49b5-8c64-98b97b1ac94b",
+  "accountNumber": "9e4b9383",
+  "clientId": "6c5014c2-ceec-483f-829b-585e01fc404c",
+  "balance": 10,
+  "isActive": true,
+  "transactions": [
+    {
+      "type": "TRANSFER",
+      "amount": 10,
+      "destinationAccount": "8a5a71a7",
+      "date": "2024-11-28T22:32:22.656Z"
+    }
+  ]
+}
+```
 
 ## License
 
