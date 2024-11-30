@@ -22,7 +22,7 @@ Este projeto é um backend desenvolvido em [NestJS](https://nestjs.com) que simu
 
 ### Arquitetura
 
-A arquitetura foi modelada em comadas separando suas reponsábilidades.
+A arquitetura foi modelada em camadas, separando suas responsabilidades.
 
 - <b>`Application:`</b> Camada responsável por orquestrar o fluxo de informações entre a camada de apresentação e o domínio.
 - <b>`Domain:`</b> Está camada é o coração do sistema, onde reside toda a lógica de negócios, incluindo definições de contratos.
@@ -95,6 +95,10 @@ npm run start:dev
 O projeto será executado  em http://localhost:3003/api/
 
 <h2 id="routes">📍 Instruções de uso</h2>
+
+- Crie um cliente em `{URL}/client`
+- Crie uma conta bancária em `{URL}/bank-account`
+- Realize transações usando os endpoints de `{URL}/transaction`
 
 Para criar um novo cliente é necessário um CPF válido. </br> Use esse site para gerar um CPF: 👉🏽 <a href="https://www.4devs.com.br/gerador_de_cpf" target="_blank">Gerar CPF</a>
 
