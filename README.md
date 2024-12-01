@@ -32,9 +32,31 @@ A arquitetura foi modelada em camadas, separando suas responsabilidades.
 
 A camada `Domain` está com 100% de cobertura nos testes de unidade.
 
+### SOLID
+
+<b>Princípio da Responsabilidade Única (SRP)</b>
+
+- Aplicado às entidades `ClientEntity` e `BankAccountEntity`. Ambas têm apenas uma responsabilidade: `ClientEntity` lida com as coisas pertinentes ao cliente, enquanto `BankAccountEntity` lida apenas com a conta bancária.
+
+<b>Princípio Aberto/Fechado (OCP)</b>
+
+- Aplicado na entidade `ClientTokenEntity`, que estende `ClientEntity` para implementar a lógica de login do cliente.
+
+<b>Princípio da Substituição de Liskov (LSP)</b>
+
+- Aplicado nos `services` e `repositories`, que podem ser substituídos pela base (interface), sem modificar o comportamento esperado.
+
+<b>Princípio de Segregação de Interface (ISP)</b>
+
+- Aplicado nas interfaces de `repositories`, onde há `BankAccountRepository` e `ClientRepository`, em vez de uma única interface genérica.
+
+<b>Princípio da Inversão de Dependência (DIP)</b>
+
+- Aplicado em todo o sistema utilizando a injeção de dependência do NestJS, onde as dependências são injetadas através do construtor. Exemplos: `ClientService`, `BankAccountService`, `BankAccountRepository` e `ClientRepository`.
+
 ### Documentação
 
-O projeto foi documentado usando o swagger. A documentação está disponível em http://localhost:3003/api
+O projeto foi documentado usando o swagger. A documentação estará disponível em http://localhost:3003/api após executar a aplicação.
 
 Todos os endpoints estão com exemplos de `request` e exemplo de `response`.
 
@@ -67,7 +89,8 @@ cp .env.example .env
 # execute o projeto
 docker compose up
 ```
-O projeto será executado  em http://localhost:3003/api/
+
+O projeto será executado em http://localhost:3003/api/
 
 ### 💪🏻 Sem-Docker
 
@@ -99,7 +122,8 @@ npm run db:migrate
 # execute o projeto
 npm run start:dev
 ```
-O projeto será executado  em http://localhost:3003/api/
+
+O projeto será executado em http://localhost:3003/api/
 
 <h2 id="routes">📍 Instruções de uso</h2>
 
@@ -109,17 +133,17 @@ O projeto será executado  em http://localhost:3003/api/
 
 Para criar um novo cliente é necessário um CPF válido. </br> Use esse site para gerar um CPF: 👉🏽 <a href="https://www.4devs.com.br/gerador_de_cpf" target="_blank">Gerar CPF</a>
 
-| rota | descrição  
-|----------------------|-----------------------------------------------------
-| <kbd>GET /client/:id</kbd> | consulta cliente por id veja os [detalhes do response](#get-client)
-| <kbd>POST /client</kbd> | cria um novo cliente veja os [detalhes do request](#create-client)
-| <kbd>POST /client/login</kbd> | login do cliente veja os [detalhes do request](#login-client)
-| <kbd>GET /bank-account/:id</kbd> | consulta conta por id veja os [detalhes do response](#get-account)
-| <kbd>POST /bank-account</kbd> | cria uma nova conta veja os [detalhes do request](#create-account)
-| <kbd>PATCH /bank-account</kbd> | atualiza status da conta veja os [detalhes do request](#update-account)
-| <kbd>POST /transaction/deposit</kbd> | realiza um depósito em uma conta veja os [detalhes do request](#deposit)
-| <kbd>POST /transaction/withdraw</kbd> | realiza um saque em uma conta veja os [detalhes do request](#withdraw)
-| <kbd>POST /transaction/transfer</kbd> | realiza uma transferência entre contas veja os [detalhes do request](#transfer)
+| rota                                  | descrição                                                                       |
+| ------------------------------------- | ------------------------------------------------------------------------------- |
+| <kbd>GET /client/:id</kbd>            | consulta cliente por id veja os [detalhes do response](#get-client)             |
+| <kbd>POST /client</kbd>               | cria um novo cliente veja os [detalhes do request](#create-client)              |
+| <kbd>POST /client/login</kbd>         | login do cliente veja os [detalhes do request](#login-client)                   |
+| <kbd>GET /bank-account/:id</kbd>      | consulta conta por id veja os [detalhes do response](#get-account)              |
+| <kbd>POST /bank-account</kbd>         | cria uma nova conta veja os [detalhes do request](#create-account)              |
+| <kbd>PATCH /bank-account</kbd>        | atualiza status da conta veja os [detalhes do request](#update-account)         |
+| <kbd>POST /transaction/deposit</kbd>  | realiza um depósito em uma conta veja os [detalhes do request](#deposit)        |
+| <kbd>POST /transaction/withdraw</kbd> | realiza um saque em uma conta veja os [detalhes do request](#withdraw)          |
+| <kbd>POST /transaction/transfer</kbd> | realiza uma transferência entre contas veja os [detalhes do request](#transfer) |
 
 <h3 id="get-client">GET /client/:id</h3>
 
@@ -241,6 +265,7 @@ Para criar um novo cliente é necessário um CPF válido. </br> Use esse site pa
   "clientId": "776f802b-6393-475c-aaac-32175f200f65"
 }
 ```
+
 <h3 id="update-account">PATCH /bank-account</h3>
 
 **REQUEST**
@@ -263,6 +288,7 @@ Para criar um novo cliente é necessário um CPF válido. </br> Use esse site pa
   "clientId": "776f802b-6393-475c-aaac-32175f200f65"
 }
 ```
+
 <h3 id="deposit">POST /transaction/deposit</h3>
 
 **REQUEST**
@@ -292,6 +318,7 @@ Para criar um novo cliente é necessário um CPF válido. </br> Use esse site pa
   ]
 }
 ```
+
 <h3 id="withdraw">POST /transaction/withdraw</h3>
 
 **REQUEST**
@@ -321,6 +348,7 @@ Para criar um novo cliente é necessário um CPF válido. </br> Use esse site pa
   ]
 }
 ```
+
 <h3 id="transfer">POST /transaction/transfer</h3>
 
 **REQUEST**
@@ -329,7 +357,7 @@ Para criar um novo cliente é necessário um CPF válido. </br> Use esse site pa
 {
   "amount": 10,
   "toAccountNumber": "8a5a71a7",
-  "fromAccountNumber": "9e4b9383",
+  "fromAccountNumber": "9e4b9383"
 }
 ```
 
